@@ -57,6 +57,8 @@ class trips_controller extends base_controller {
             $this->template->content = View::instance('v_trips_index');
             $this->template->title   = "All Trips";
 
+            $here = Geolocate::locate();
+
             # Query
             $q = 'SELECT 
                     trips.trip_id,
@@ -70,8 +72,7 @@ class trips_controller extends base_controller {
                 FROM trips
                 INNER JOIN users 
                     ON trips.user_id = users.user_id
-                WHERE users.user_id = '.$this->user->user_id.
-                ' ORDER BY trips.created DESC';
+                ORDER BY trips.created DESC';
 
             # Run the query, store the results in the variable $trips
             $trips = DB::instance(DB_NAME)->select_rows($q);
@@ -88,10 +89,21 @@ class trips_controller extends base_controller {
             $q = "SELECT trip_id, COUNT(1) AS total FROM users_trips GROUP BY trip_id";
             $stars = DB::instance(DB_NAME)->select_rows($q);
 
-            
+
+
+            $tripObj = new Trip(); 
+          //  $tripObj->trip_id = $trips['trip_id'];
+          //  $tripObj->__load_trip(); 
+
+          //  $this->template->content->entries = Entry::get_entries_by_trip(3);
+          //  print_r($tripObj);
+
             $this->template->content->stars = $stars;
             $this->template->content->trips = $trips;
             $this->template->content->star = $star;
+            $this->template->content->tripObj = $tripObj;
+            $this->template->content->here = $here;
+
 
            # Render the View
             echo $this->template;
@@ -212,36 +224,56 @@ class trips_controller extends base_controller {
 
         }
 
-        public function dashboard($trip_dash) {
 
+        public function dashboard($trip_id) {
+
+            # Set up the View
             $this->template->head = View::instance("v_index_head");
-            $this->template->nav = View::instance('v_trips_index_nav');
-            $this->template->content = View::instance('v_trips_dashboard');
-            $this->template->title   = "Hiiiii";
+            $this->template->nav = View::instance("v_trips_users_nav");
+            $this->template->content = View::instance("v_trips_dashboard");
+            $this->template->title   = "Dashboard";
 
-            # Trying to pass trip id to dashboard
-           // $trip_dash = "trip_id";
-
-            /*$trip_dash = DB::instance(DB_NAME)->select_rows("trips", "trip_id");
-
-            # Query to select entries for a specific trip
+            # Build the query to get all the users
             $q = "SELECT *
                 FROM entries
-                WHERE trip_id = ".$trip_dash.
-                " ORDER BY entries.created ASC";
+                WHERE trip_id = ".$trip_id;
 
-            # Execute the query to get all the entries. 
-            # Store the result array in the variable $entries
+            # Execute the query to get all the users. 
+            # Store the result array in the variable $users
             $entries = DB::instance(DB_NAME)->select_rows($q);
-            
-            $q = "SELECT *
-                FROM trips
-                WHERE trip_id = ".$trip_dash;
 
-            $this_trip = DB::instance(DB_NAME)->select_rows($q);
+            # Build the query to figure out what connections does this user already have? 
+            # I.e. who are they following
+            //$q = "SELECT * 
+            //    FROM trips_entries
+             //   WHERE user_id = ".$this->user->user_id;
 
-            $this->template->content->entries     = $entries;*/
-            $this->template->content->trip_dash = $trip_dash;
+            # Execute this query with the select_array method
+            # select_array will return our results in an array and use the "users_id_followed" field as the index.
+            # This will come in handy when we get to the view
+            # Store our results (an array) in the variable $connections
+            //$connections = DB::instance(DB_NAME)->select_array($q, 'user_id_followed');
+
+            # Pass data (users and connections) to the view
+            $this->template->content->entries       = $entries;
+           // $this->template->content->connections = $connections;
+
+            # Render the view
+            echo $this->template;
+        
+
+           // $data = Array(
+           //     "trip_id" => $trip_id,
+           //     "user_id" => $this->user->user_id,
+           //     );
+
+          //  DB::instance(DB_NAME)->insert("users_trips", $data);
+
+          //  Router::redirect("/trips");
         }
+
+
+
+
 }
 ?>

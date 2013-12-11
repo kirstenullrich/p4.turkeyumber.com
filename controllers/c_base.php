@@ -7,6 +7,9 @@ class base_controller {
 	public $template;
 	public $email_template;
 
+	public $tripObj;
+	public $trip;
+
 	/*-------------------------------------------------------------------------------------------------
 
 	-------------------------------------------------------------------------------------------------*/
@@ -14,6 +17,7 @@ class base_controller {
 						
 		# Instantiate User obj
 			$this->userObj = new User();
+			$this->tripObj = new Trip();
 			
 		# Authenticate / load user
 			$this->user = $this->userObj->authenticate();					
@@ -24,6 +28,7 @@ class base_controller {
 								
 		# So we can use $user in views			
 			$this->template->set_global('user', $this->user);
+			$this->template->set_global('trip', $this->trip);
 			
 	}
 	

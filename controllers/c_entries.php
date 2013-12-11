@@ -28,6 +28,11 @@ class entries_controller extends base_controller {
         if (empty($_POST['title'])) {
             Router::redirect("/trips/new/missing");
         } 
+        
+        $here = Geolocate::locate();
+        $_POST['state']  = $here['state'];
+        $_POST['city']  = $here['city'];
+        $_POST['ip']  = $here['ip'];
 
         # Associate this trip with this user
         $_POST['user_id']  = $this->user->user_id;
@@ -47,5 +52,6 @@ class entries_controller extends base_controller {
 
         Router::redirect("/entries/add");
     }
+
 }
 ?>

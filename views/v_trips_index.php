@@ -9,25 +9,20 @@
             <div>
 
                 <h1><?=$trip['title']?></h1>
-
+<h2><?php echo $tripObj->trip_id;?></h2>
                 <p><?=$trip['description']?></p>
 
-                <p>Posted by <?=$user->first_name?> <?=$user->last_name?></p>
+                <p>Posted by <?=$trip['first_name']?> <?=$trip['last_name']?></p>
 
                 <time datetime="<?=Time::display($trip['created'],'Y-m-d G:i')?>"  >
                     <?=Time::display($trip['created'])?>
                 </time>
 
+                 <a href="trips/dashboard/<?=$trip['trip_id']?>">See details</a>
             </div>
 
         </article>
 
-                <?php if($trip['trip_user_id'] == $user->user_id): ?>
-
-
-                    <a href="/dashboard/<?=$trip['trip_id']?>">Modify this trip</a>
-
-                <?php endif; ?>
 
             
                 <?php if(isset($star[$trip['trip_id']])): ?>
@@ -69,5 +64,9 @@
         <p >No favorites.</p>
 
     <?php endif; ?>
+
+
+<?php print_r($here['state']);?>
+<br>
 
 </div>
