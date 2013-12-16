@@ -9,7 +9,6 @@
             <div>
 
                 <h1><?=$trip['title']?></h1>
-<h2><?php echo $tripObj->trip_id;?></h2>
                 <p><?=$trip['description']?></p>
 
                 <p>Posted by <?=$trip['first_name']?> <?=$trip['last_name']?></p>

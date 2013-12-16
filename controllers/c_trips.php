@@ -90,18 +90,9 @@ class trips_controller extends base_controller {
             $stars = DB::instance(DB_NAME)->select_rows($q);
 
 
-
-            $tripObj = new Trip(); 
-          //  $tripObj->trip_id = $trips['trip_id'];
-          //  $tripObj->__load_trip(); 
-
-          //  $this->template->content->entries = Entry::get_entries_by_trip(3);
-          //  print_r($tripObj);
-
             $this->template->content->stars = $stars;
             $this->template->content->trips = $trips;
             $this->template->content->star = $star;
-            $this->template->content->tripObj = $tripObj;
             $this->template->content->here = $here;
 
 
@@ -135,71 +126,8 @@ class trips_controller extends base_controller {
             echo $this->template;
         }
 
-        public function users() {
-
-            # Set up the View
-            $this->template->head = View::instance("v_index_head");
-            $this->template->nav = View::instance("v_trips_users_nav");
-            $this->template->content = View::instance("v_trips_users");
-            $this->template->title   = "Users";
-
-            # Build the query to get all the users
-            $q = "SELECT *
-                FROM users
-                WHERE user_id != ".$this->user->user_id;
-
-            # Execute the query to get all the users. 
-            # Store the result array in the variable $users
-            $users = DB::instance(DB_NAME)->select_rows($q);
-
-            # Build the query to figure out what connections does this user already have? 
-            # I.e. who are they following
-            $q = "SELECT * 
-                FROM users_users
-                WHERE user_id = ".$this->user->user_id;
-
-            # Execute this query with the select_array method
-            # select_array will return our results in an array and use the "users_id_followed" field as the index.
-            # This will come in handy when we get to the view
-            # Store our results (an array) in the variable $connections
-            $connections = DB::instance(DB_NAME)->select_array($q, 'user_id_followed');
-
-            # Pass data (users and connections) to the view
-            $this->template->content->users       = $users;
-            $this->template->content->connections = $connections;
-
-            # Render the view
-            echo $this->template;
-        }
 
 
-        public function follow($user_id_followed) {
-
-            # Prepare the data array to be inserted
-            $data = Array(
-                "created" => Time::now(),
-                "user_id" => $this->user->user_id,
-                "user_id_followed" => $user_id_followed
-                );
-
-            # Do the insert
-            DB::instance(DB_NAME)->insert('users_users', $data);
-
-            # Send them back
-            Router::redirect("/trips/users");
-
-        }
-
-        public function unfollow($user_id_followed) {
-
-            # Delete this connection
-            $where_condition = 'WHERE user_id = '.$this->user->user_id.' AND user_id_followed = '.$user_id_followed;
-            DB::instance(DB_NAME)->delete('users_users', $where_condition);
-
-            # Send them back
-            Router::redirect("/trips/users");
-
-        }
 
         public function star($trip_id) {
 
@@ -228,51 +156,140 @@ class trips_controller extends base_controller {
         public function dashboard($trip_id) {
 
             # Set up the View
-            $this->template->head = View::instance("v_index_head");
-            $this->template->nav = View::instance("v_trips_users_nav");
+            $this->template->head = View::instance("v_trips_head");
+            $this->template->nav = View::instance("v_trips_dash_nav");
             $this->template->content = View::instance("v_trips_dashboard");
             $this->template->title   = "Dashboard";
 
-            # Build the query to get all the users
-            $q = "SELECT *
-                FROM entries
-                WHERE trip_id = ".$trip_id;
+            $client_files_body = Array(
+                '/js/dashboard.js',
+                '/js/vendor/colorbox/jquery.colorbox-min.js'
+                );
 
-            # Execute the query to get all the users. 
-            # Store the result array in the variable $users
+            $this->template->client_files_body = Utils::load_client_files($client_files_body);  
+            
+            # Build the query to get all the entries
+            $q = "SELECT
+                * from entries
+                WHERE trip_id = ".$trip_id.
+                " ORDER BY created DESC";
+
             $entries = DB::instance(DB_NAME)->select_rows($q);
 
-            # Build the query to figure out what connections does this user already have? 
-            # I.e. who are they following
-            //$q = "SELECT * 
-            //    FROM trips_entries
-             //   WHERE user_id = ".$this->user->user_id;
+            $q = "SELECT 
+                pics.pic_id,
+                pics.img,
+                pics.caption,
+                pics.created AS pics_created,
+                entries.entry_id AS the_entry_id,
+                entries.trip_id
+                FROM entries
+                INNER JOIN pics 
+                    ON entries.entry_id = pics.entry_id
+                WHERE entries.trip_id = ".$trip_id;
 
-            # Execute this query with the select_array method
-            # select_array will return our results in an array and use the "users_id_followed" field as the index.
-            # This will come in handy when we get to the view
-            # Store our results (an array) in the variable $connections
-            //$connections = DB::instance(DB_NAME)->select_array($q, 'user_id_followed');
+            $gallery = DB::instance(DB_NAME)->select_rows($q);
+
+           
+            $q = "SELECT *
+                FROM trips
+                WHERE trip_id = ".$trip_id;
+
+            $thistrip = DB::instance(DB_NAME)->select_row($q);
+
 
             # Pass data (users and connections) to the view
             $this->template->content->entries       = $entries;
+            $this->template->content->thistrip      = $thistrip;
+            $this->template->content->trip_id       = $trip_id;
+            $this->template->content->gallery       = $gallery;
+
            // $this->template->content->connections = $connections;
 
             # Render the view
             echo $this->template;
-        
-
-           // $data = Array(
-           //     "trip_id" => $trip_id,
-           //     "user_id" => $this->user->user_id,
-           //     );
-
-          //  DB::instance(DB_NAME)->insert("users_trips", $data);
-
-          //  Router::redirect("/trips");
         }
 
 
+
+    public function p_newentry($trip_id) {
+        # Check for blank fields
+        if (empty($_POST['title'])) {
+            Router::redirect("/trips/newentry/blank");
+        } 
+        
+        $here = Geolocate::locate();
+        $_POST['state']  = $here['state'];
+        $_POST['city']  = $here['city'];
+        $_POST['ip']  = $here['ip'];
+
+        # Associate this trip with this user
+        $_POST['user_id']  = $this->user->user_id;
+
+        # Unix timestamp of when this trip was created / modified
+        $_POST['created']  = Time::now();
+        $_POST['modified'] = Time::now();
+
+        $_POST['pic_id'] = "";
+        $_POST['trip_id'] = $trip_id;
+        $_POST['vid'] = "";
+        $_POST['comment_id'] = "";
+
+        # Insert
+        # Note we didn't have to sanitize any of the $_POST data because we're using the insert method which does it for us
+        DB::instance(DB_NAME)->insert("entries", $_POST);
+
+        Router::redirect("/trips/dashboard/".$trip_id);
+    }
+    public function p_modify($entry_id, $trip_id) {
+         # Check for blank fields
+      //  if (empty($_POST['title'])) {
+        //    Router::redirect("/entries/modify/error");
+        //} 
+
+        $_POST['modified'] = Time::now();
+        
+        $where = "WHERE entry_id = ".$entry_id;
+        DB::instance(DB_NAME)->update("entries", $_POST, $where);
+
+        Router::redirect("/trips/dashboard/".$trip_id);
+    }
+
+    public function addimage($entry_id, $trip_id) {
+        # Upload a profile image
+            if ($_FILES['img']['error'] == 0) {
+            $entry_image = Upload::upload($_FILES, "/uploads/entries/", array("JPG", "JPEG", "jpg", "jpeg", "gif", "GIF", "png", "PNG"), "entry_image_".$entry_id."_".Utils::generate_random_string());
+
+        # Error message if the file type isn't on the list
+            if($entry_image == 'Invalid file type.') {
+            Router::redirect("/trips/dashboard/invalid");
+            }
+
+            else {
+
+                # Process the upload
+                $data = Array("img" => $entry_image,
+                            "entry_id" => $entry_id);
+                DB::instance(DB_NAME)->insert("pics", $data);
+
+                # Instantiate new image object using uploaded file
+                $imgObj = new Image(APP_PATH."uploads/entries/".$entry_image);
+
+                # Resize the image
+                $imgObj->resize(150,200, "crop");
+                $imgObj->save_image(APP_PATH."uploads/entries/".$entry_image, 100);
+               // DB::instance(DB_NAME)->insert("pics", $_POST);
+                }
+            }
+            else
+            {
+                # Error message if file isn't able to be processed
+                Router::redirect("/trips/dashboard/process/");
+            }
+
+        # Go back to the profile page
+        Router::redirect("/trips/dashboard/".$trip_id);
+        }
 
 
 }

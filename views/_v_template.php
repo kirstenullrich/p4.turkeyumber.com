@@ -9,8 +9,10 @@
 	<!-- Sitewide JS/CSS -->
     <link rel="stylesheet" href="/css/normalize.css">
     <link rel="stylesheet" href="/css/style.css">
-    <link href='http://fonts.googleapis.com/css?family=Asap:400,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="js/vendors/colorbox/colorbox.css">
     <script src="/js/vendor/modernizr-2.6.2.min.js"></script>	
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>    
 
 	<!-- Controller Specific JS/CSS -->
 	<?php if(isset($client_files_head)) echo $client_files_head; ?>
@@ -19,7 +21,6 @@
 
 <body>
     <!-- Top for users who are logged in -->
-
         <?php if($user): ?>
 
         	<?php if(isset($head)) echo $head; ?>
@@ -29,13 +30,14 @@
     <!-- Top for users who are not logged in -->
         <?php else: ?>
 
-        <header >
+                <header class="clearfix">
+            <img src="images/notes_logo_sm.png" class="logo" height="88" width="240" alt="Notes from the Road logo"/>
         </header>
-                <nav>
 
-            <div class="main">
-                <ul>	
-                    <li class="hidden">No navigation because user is not logged in</li>
+
+        <nav>
+            <div class="sub">
+                <ul>
                 </ul>
             </div>
 

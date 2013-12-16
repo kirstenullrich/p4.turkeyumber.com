@@ -8,9 +8,21 @@ class Entry {
 			FROM entries
 			WHERE trip_id = '.$trip_id;
 		
-		$entries = DB::instance(DB_NAME)->select_rows($q);
+		$trip_entries = DB::instance(DB_NAME)->select_rows($q);
 		
-		return $entries;
+		return $trip_entries;
+		
+	}
+
+		public static function get_entries_by_id($entry_id) {
+	
+		$q = 'SELECT *
+			FROM entries
+			WHERE entry_id = '.$entry_id;
+		
+		$specific_entry = DB::instance(DB_NAME)->select_rows($q);
+		
+		return $specific_entry;
 		
 	}
 

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <title>Notes from the Road</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/style.css">
+        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    </head>
+
+    <body>
+        
+        <header class="clearfix">
+            <img src="images/notes_logo_sm.png" class="logo" height="88" width="240" alt="Notes from the Road logo"/>
+        </header>
+
+
+        <nav>
+
+            <div class="main">
+                <ul>
+                    <li><a href="#">Starred Trips</a></li>
+                    <li><a href="#">Your Trips</a></li>
+                    <li><a href="#">Log Out</a></li>
+                </ul>
+            </div>
+
+            <div class="sub">
+                <ul>
+                    <li>Trip Dashboard</li>
+                </ul>
+            </div>
+
+        </nav>
+        
+        <div class="contentwrap clearfix">
+            <div id="dash">
+                <div id="top">
+                    <aside class="newentry">New Entry</aside>
+                    <aside class="miles">000855</aside>
+                    <h1>Really long Title of Trip</h1>
+                    <h2>Dates</h2>
+                </div>
+                <div id="map">
+                    <div class="state vt"></div>
+                    <div class="state ny"></div>
+                    <img src="images/map_bg.png" height="330" width="500" alt="US map"/>
+                </div>
+            </div>
+
+            <article class="entry ">
+                <aside class="expand"><img src="images/toggle_on.png"></aside>
+                <h1 class="entry">Modify</h1> 
+                <h2 class="entry">Created: 12:20pm, October x, 2013 | Location: Albany, NY</h2>
+
+                <img class="entry" src="images/fpo.jpg" height="150" width="200" alt="entry picture" />
+                <a class="picdelete" href="#">Delete picture</a>
+                <img class="entry" src="images/fpo.jpg" height="150" width="200" alt="entry picture" />
+                <a class="picdelete" href="#">Delete picture</a>
+                <img class="entry" src="images/fpo.jpg" height="150" width="200" alt="entry picture" />
+                <a class="picdelete" href="#">Delete picture</a>
+
+                    <form class="entry">
+                        <h1>Title</h1>
+                        <input type='text' name="title" required ><br>
+                        <h1>Entry text</h1>
+                        <textarea name="text" required></textarea>
+                        <input type="submit" value="Submit">
+                    </form>
+
+
+                    <br>
+                    <form class="entry">
+                                            <h1 >Picture</h1>
+
+                        <input type='file' name='image'><br>
+                        <input type='submit' value='Add'>
+                    </form>
+
+                            <p class='error'>
+                                Invalid file type. Please upload a JPG, PNG, or GIF file.<br>
+                            </p>
+            </article>
+            
+        </div>
+
+    </body >
+
+</html>
