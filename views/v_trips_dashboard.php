@@ -7,8 +7,10 @@
                     <h2>Dates</h2>
                 </div>
                 <div id="map">
-                    <div class="state vt"></div>
-                    <div class="state ny"></div>
+                	<?php foreach($entries as $entry): ?>
+                    	<div class="state <?=$entry['state'];?>"></div>
+                    <?php endforeach; ?>
+
                     <img src="/../images/map_bg.png" height="330" width="500" alt="US map"/>
                 </div>
             </div>
@@ -105,40 +107,31 @@
 
             	<article class="existing">
 
-	                <aside class="expand"><img src="images/toggle_on.png"></aside>
-
 	                <h1><?=$entry['title']?></h1> 
+	                	<?php if($entry['pic_id'] == '1'): ?>
+                            <a id="pic_<?=$entry['entry_id'];?>" href="../gallery/<?=$entry['entry_id'];?>/<?=$trip_id;?>" class="pic"><img src="/../images/pic.png"/></a>
+                        <?php endif; ?>
+
+    					<?php if (!empty($entry['text'])): ?>
+                            <img id="text_<?=$entry['entry_id'];?>" class="text" src="/../images/text.png"/>
+                        <?php endif; ?>
 
 	                <h2>
 	                    <?=Time::display($entry['created']);?> | <?=$entry['city'];?>, <?=$entry['state']?>
 	                </h2>
 
-
-	                <p><?=$entry['text']?></p>
-
-
-		            <?php if($gallery['0']['the_entry_id'] == $entry['entry_id']): ?>
-
-                		<a href="#" class="link" >Click to view gallery images</a>
-							<a rel="gallery" href="../../images/fpo.jpg"></a>
-							<a rel="gallery" href="../../uploads/entries/<?=$gallery['0']['img']?>"></a>
-
-		                <div class="display-none">
-
-		                <?php foreach($gallery as $picture): ?>
-							<a rel="gallery<?=$entry['entry_id'];?>" href="../../uploads/entries/<?=$picture['img']?>"></a>
-						 <?php endforeach; ?>
-
-						</div>
-
-						
-
-		            <?php endif; ?>
-
+	                <div id="textwrap_<?=$entry['entry_id'];?>" class="display-none">
+	                	<p><?=$entry['text']?></p>
+	            	</div>
 
 		        </article>
 
 
+		        <script>
+					$('#text_<?=$entry['entry_id'];?>').click(function() {
+						$('#textwrap_<?=$entry['entry_id'];?>').toggle();
+					});
+		        </script>
 
 	            <?php if($entry['user_id'] == $user->user_id): ?>
 
@@ -164,6 +157,7 @@
 					    <form class="mod_entry" method='POST' enctype="multipart/form-data" action='/trips/addimage/<?php echo $entry['entry_id']; ?>/<?=$trip_id;?>'>
 							<h1>Picture</h1><br>
 							<input type='file' name='img'><br>
+							<input type='text' name="caption" ><br>
 							<input type='submit' value='Add'>
 						</form>
 
@@ -191,12 +185,3 @@
 
 </div>
 
-<script>
-
-						    var $gallery = $("a[rel=gallery").colorbox();
-							$("a.link").click(function(e){
-							    e.preventDefault();
-							    $gallery.eq(0).click();
-							});
-
-						</script>

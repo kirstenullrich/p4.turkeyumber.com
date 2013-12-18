@@ -1,0 +1,40 @@
+
+[Wed Dec 18 02:17:08 2013] [127.0.0.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:25.0) Gecko/20100101 Firefox/25.0] Image does not exist: /Users/kirsten/Sites/p4.turkeyumber.com/entries/entry_image_9_ahyqyt.JPG
+
+REFERRER: http://localhost/trips/gallery/9/4
+
+REQUEST: localhost/slir/uploads/entries/entry_image_9_ahyqyt.JPG
+
+#0 /Users/kirsten/Sites/p4.turkeyumber.com/slir/core/slirrequest.class.php(170): SLIRRequest->setPath('entries/entry_i...')
+#1 /Users/kirsten/Sites/p4.turkeyumber.com/slir/core/slirrequest.class.php(126): SLIRRequest->__set('i', 'entries/entry_i...')
+#2 /Users/kirsten/Sites/p4.turkeyumber.com/slir/core/slir.class.php(286): SLIRRequest->initialize()
+#3 /Users/kirsten/Sites/p4.turkeyumber.com/slir/core/slir.class.php(444): SLIR->getRequest()
+#4 /Users/kirsten/Sites/p4.turkeyumber.com/slir/core/slir.class.php(257): SLIR->shouldUseRequestCache()
+#5 /Users/kirsten/Sites/p4.turkeyumber.com/slir/index.php(30): SLIR->processRequestFromURL()
+#6 {main}
+[Wed Dec 18 03:21:51 2013] [127.0.0.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:25.0) Gecko/20100101 Firefox/25.0] Image does not exist: /Users/kirsten/Sites/p4.turkeyumber.com/uploads/entries/entry_image_10_judyra.JPG
+
+REFERRER: http://localhost/trips/gallery/10/4
+
+REQUEST: localhost/slir/w580-h580/uploads/entries/entry_image_10_judyra.JPG
+
+#0 /Users/kirsten/Sites/p4.turkeyumber.com/slir/core/slirrequest.class.php(170): SLIRRequest->setPath('uploads/entries...')
+#1 /Users/kirsten/Sites/p4.turkeyumber.com/slir/core/slirrequest.class.php(126): SLIRRequest->__set('i', 'uploads/entries...')
+#2 /Users/kirsten/Sites/p4.turkeyumber.com/slir/core/slir.class.php(286): SLIRRequest->initialize()
+#3 /Users/kirsten/Sites/p4.turkeyumber.com/slir/core/slir.class.php(444): SLIR->getRequest()
+#4 /Users/kirsten/Sites/p4.turkeyumber.com/slir/core/slir.class.php(257): SLIR->shouldUseRequestCache()
+#5 /Users/kirsten/Sites/p4.turkeyumber.com/slir/index.php(30): SLIR->processRequestFromURL()
+#6 {main}
+[Wed Dec 18 03:32:18 2013] [127.0.0.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:25.0) Gecko/20100101 Firefox/25.0] Image does not exist: /Users/kirsten/Sites/p4.turkeyumber.com/uploads/entries/entry_image_10_judyra.JPG
+
+REFERRER: http://localhost/trips/gallery/10/4
+
+REQUEST: localhost/slir/w580-h580/uploads/entries/entry_image_10_judyra.JPG
+
+#0 /Users/kirsten/Sites/p4.turkeyumber.com/slir/core/slirrequest.class.php(170): SLIRRequest->setPath('uploads/entries...')
+#1 /Users/kirsten/Sites/p4.turkeyumber.com/slir/core/slirrequest.class.php(126): SLIRRequest->__set('i', 'uploads/entries...')
+#2 /Users/kirsten/Sites/p4.turkeyumber.com/slir/core/slir.class.php(286): SLIRRequest->initialize()
+#3 /Users/kirsten/Sites/p4.turkeyumber.com/slir/core/slir.class.php(444): SLIR->getRequest()
+#4 /Users/kirsten/Sites/p4.turkeyumber.com/slir/core/slir.class.php(257): SLIR->shouldUseRequestCache()
+#5 /Users/kirsten/Sites/p4.turkeyumber.com/slir/index.php(30): SLIR->processRequestFromURL()
+#6 {main}

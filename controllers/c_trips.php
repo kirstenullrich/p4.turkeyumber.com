@@ -14,9 +14,8 @@ class trips_controller extends base_controller {
 
         # Setup view
         $this->template->head = View::instance("v_index_head");
-        $this->template->nav = View::instance('v_trips_add_nav');
         $this->template->content = View::instance('v_trips_add');
-        $this->template->title   = "New Trip";
+        $this->template->title = "New Trip";
 
         # Render template
         echo $this->template;
@@ -27,13 +26,13 @@ class trips_controller extends base_controller {
         # Check for blank fields
         if (empty($_POST['title'])) {
             Router::redirect("/trips/new/missing");
-        } 
+        }
 
         # Associate this trip with this user
-        $_POST['user_id']  = $this->user->user_id;
+        $_POST['user_id'] = $this->user->user_id;
 
         # Unix timestamp of when this trip was created / modified
-        $_POST['created']  = Time::now();
+        $_POST['created'] = Time::now();
         $_POST['modified'] = Time::now();
 
         $_POST['miles'] = "";
@@ -53,35 +52,34 @@ class trips_controller extends base_controller {
 
             # Set up the View
             $this->template->head = View::instance("v_index_head");
-            $this->template->nav = View::instance('v_trips_index_nav');
             $this->template->content = View::instance('v_trips_index');
-            $this->template->title   = "All Trips";
+            $this->template->title = "All Trips";
 
             $here = Geolocate::locate();
 
             # Query
-            $q = 'SELECT 
-                    trips.trip_id,
-                    trips.title,
-                    trips.description,
-                    trips.created,
-                    trips.user_id AS trip_user_id,
-                    users.first_name,
-                    users.last_name,
-                    users.image
-                FROM trips
-                INNER JOIN users 
-                    ON trips.user_id = users.user_id
-                ORDER BY trips.created DESC';
+            $q = 'SELECT
+            trips.trip_id,
+            trips.title,
+            trips.description,
+            trips.created,
+            trips.user_id AS trip_user_id,
+            users.first_name,
+            users.last_name,
+            users.image
+            FROM trips
+            INNER JOIN users
+            ON trips.user_id = users.user_id
+            ORDER BY trips.created DESC';
 
             # Run the query, store the results in the variable $trips
             $trips = DB::instance(DB_NAME)->select_rows($q);
 
             $q = 'SELECT users_trips.trip_id AS starred_id
-                FROM users_trips 
-                INNER JOIN trips 
-                    ON trips.trip_id = users_trips.trip_id
-                WHERE users_trips.user_id = '.$this->user->user_id;
+            FROM users_trips
+            INNER JOIN trips
+            ON trips.trip_id = users_trips.trip_id
+            WHERE users_trips.user_id = '.$this->user->user_id;
 
             $star = DB::instance(DB_NAME)->select_array($q, 'starred_id');
 
@@ -108,17 +106,17 @@ class trips_controller extends base_controller {
             $this->template->content = View::instance('v_trips_self');
 
             $q = "SELECT
-                    trips.trip_id,
-                    trips.content,
-                    trips.created,
-                    trips.user_id AS trip_user_id,
-                    users.first_name,
-                    users.last_name,
-                    users.image
-                FROM trips
-                INNER JOIN users 
-                    ON trips.user_id = users.user_id
-                WHERE users.user_id = ".$this->user->user_id.
+            trips.trip_id,
+            trips.content,
+            trips.created,
+            trips.user_id AS trip_user_id,
+            users.first_name,
+            users.last_name,
+            users.image
+            FROM trips
+            INNER JOIN users
+            ON trips.user_id = users.user_id
+            WHERE users.user_id = ".$this->user->user_id.
                 " ORDER BY trips.created DESC";
             $trips = DB::instance(DB_NAME)->select_rows($q);
             $this->template->content->trips = $trips;
@@ -157,52 +155,42 @@ class trips_controller extends base_controller {
 
             # Set up the View
             $this->template->head = View::instance("v_trips_head");
-            $this->template->nav = View::instance("v_trips_dash_nav");
             $this->template->content = View::instance("v_trips_dashboard");
-            $this->template->title   = "Dashboard";
+            $this->template->title = "Dashboard";
 
             $client_files_body = Array(
-                '/js/dashboard.js',
-                '/js/vendor/colorbox/jquery.colorbox-min.js'
+                '/js/dashboard.js'
                 );
 
-            $this->template->client_files_body = Utils::load_client_files($client_files_body);  
+            $this->template->client_files_body = Utils::load_client_files($client_files_body);
             
             # Build the query to get all the entries
             $q = "SELECT
-                * from entries
-                WHERE trip_id = ".$trip_id.
-                " ORDER BY created DESC";
+            * from entries
+            WHERE trip_id = ".$trip_id.
+            " ORDER BY created DESC";
 
             $entries = DB::instance(DB_NAME)->select_rows($q);
 
             $q = "SELECT 
-                pics.pic_id,
-                pics.img,
-                pics.caption,
-                pics.created AS pics_created,
-                entries.entry_id AS the_entry_id,
-                entries.trip_id
-                FROM entries
-                INNER JOIN pics 
-                    ON entries.entry_id = pics.entry_id
-                WHERE entries.trip_id = ".$trip_id;
+            pic_id, entry_id 
+            FROM pics";
 
-            $gallery = DB::instance(DB_NAME)->select_rows($q);
+            $gallery = DB::instance(DB_NAME)->select_kv($q, 'entry_id', 'pic_id');
 
            
             $q = "SELECT *
-                FROM trips
-                WHERE trip_id = ".$trip_id;
+            FROM trips
+            WHERE trip_id = ".$trip_id;
 
             $thistrip = DB::instance(DB_NAME)->select_row($q);
 
 
             # Pass data (users and connections) to the view
-            $this->template->content->entries       = $entries;
-            $this->template->content->thistrip      = $thistrip;
-            $this->template->content->trip_id       = $trip_id;
-            $this->template->content->gallery       = $gallery;
+            $this->template->content->entries = $entries;
+            $this->template->content->thistrip = $thistrip;
+            $this->template->content->trip_id = $trip_id;
+            $this->template->content->gallery = $gallery;
 
            // $this->template->content->connections = $connections;
 
@@ -216,18 +204,18 @@ class trips_controller extends base_controller {
         # Check for blank fields
         if (empty($_POST['title'])) {
             Router::redirect("/trips/newentry/blank");
-        } 
+        }
         
         $here = Geolocate::locate();
-        $_POST['state']  = $here['state'];
-        $_POST['city']  = $here['city'];
-        $_POST['ip']  = $here['ip'];
+        $_POST['state'] = $here['state'];
+        $_POST['city'] = $here['city'];
+        $_POST['ip'] = $here['ip'];
 
         # Associate this trip with this user
-        $_POST['user_id']  = $this->user->user_id;
+        $_POST['user_id'] = $this->user->user_id;
 
         # Unix timestamp of when this trip was created / modified
-        $_POST['created']  = Time::now();
+        $_POST['created'] = Time::now();
         $_POST['modified'] = Time::now();
 
         $_POST['pic_id'] = "";
@@ -243,9 +231,9 @@ class trips_controller extends base_controller {
     }
     public function p_modify($entry_id, $trip_id) {
          # Check for blank fields
-      //  if (empty($_POST['title'])) {
-        //    Router::redirect("/entries/modify/error");
-        //} 
+      // if (empty($_POST['title'])) {
+        // Router::redirect("/entries/modify/error");
+        //}
 
         $_POST['modified'] = Time::now();
         
@@ -266,19 +254,23 @@ class trips_controller extends base_controller {
             }
 
             else {
-
+                
                 # Process the upload
                 $data = Array("img" => $entry_image,
-                            "entry_id" => $entry_id);
+                            "entry_id" => $entry_id,
+                            "created" => Time::now());
                 DB::instance(DB_NAME)->insert("pics", $data);
+
+                $pic = Array("pic_id" => "1");
+                DB::instance(DB_NAME)->update("entries", $pic, "WHERE entry_id = ".$entry_id);
 
                 # Instantiate new image object using uploaded file
                 $imgObj = new Image(APP_PATH."uploads/entries/".$entry_image);
 
                 # Resize the image
-                $imgObj->resize(150,200, "crop");
+                $imgObj->resize(500,500, "crop");
                 $imgObj->save_image(APP_PATH."uploads/entries/".$entry_image, 100);
-               // DB::instance(DB_NAME)->insert("pics", $_POST);
+                Router::redirect("/trips/dashboard/".$trip_id);
                 }
             }
             else
@@ -286,11 +278,40 @@ class trips_controller extends base_controller {
                 # Error message if file isn't able to be processed
                 Router::redirect("/trips/dashboard/process/");
             }
-
-        # Go back to the profile page
-        Router::redirect("/trips/dashboard/".$trip_id);
         }
 
+
+    public function gallery($entry_id, $trip_id) {
+            # Set up the View
+            $this->template->head = View::instance("v_trips_head");
+            $this->template->content = View::instance('v_trips_gallery');
+            $this->template->title = "All Trips";
+
+            # Query
+            $q = 'SELECT *
+            FROM pics
+            WHERE entry_id = '.$entry_id;
+
+            # Run the query, store the results in the variable $trips
+            $gallery = DB::instance(DB_NAME)->select_rows($q);
+
+            # Query
+            $q = 'SELECT title
+            FROM entries
+            WHERE entry_id = '.$entry_id;
+
+            # Run the query, store the results in the variable $trips
+            $title = DB::instance(DB_NAME)->select_field($q);
+
+
+            $this->template->content->gallery = $gallery;
+            $this->template->content->entry_id = $entry_id;
+            $this->template->content->trip_id = $trip_id;
+            $this->template->content->title = $title;
+
+            echo $this->template;
+
+    }
 
 }
 ?>
