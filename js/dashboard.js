@@ -6,12 +6,11 @@ $('.newentry').click(function() {
 });
 
 $('.modify').click(function() {
+	console.log('modify clicked');
 	$(this).next(".mod_entry_wrap").toggle();
 	$(this).prev(".existing").toggle();
 	return false;
 });
 
-$('.addcomment').click(function() {
-	$('.commentform').toggle();
-});
+
 //console.log("dash loaded");

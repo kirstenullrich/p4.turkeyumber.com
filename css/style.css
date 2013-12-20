@@ -172,6 +172,7 @@ nav ul li a:hover {
 .main ul li a {
     color: #658BB2;
     padding: 10px 0 8px 20px;
+    z-index: 2000;
 }
 
 .last {
@@ -426,6 +427,7 @@ a.pic, img.text, img.comments {
 #entry_list p.addcomment {
     float: right;
     text-align: right;
+    clear: right;
 }
 
 div.mod_entry_wrap {

@@ -175,14 +175,19 @@ class trips_controller extends base_controller {
 
             $q = "SELECT
             comments.entry_id AS thisentrycomment, 
-            comments.user_id, 
+            comments.user_id AS commenter,
             comments.created, 
             comments.content,
             entries.entry_id AS entry_id,
-            entries.trip_id
+            entries.trip_id,
+            users.user_id AS user_id,
+            users.first_name,
+            users.last_name
             FROM comments
             INNER JOIN entries
             ON comments.entry_id = entries.entry_id 
+            INNER JOIN users
+            ON comments.user_id = users.user_id
             WHERE trip_id = ".$trip_id.
             " ORDER BY created DESC";
 
@@ -252,6 +257,7 @@ class trips_controller extends base_controller {
 
         Router::redirect("/trips/dashboard/".$trip_id);
     }
+
     public function p_modify($entry_id, $trip_id) {
          # Check for blank fields
       // if (empty($_POST['title'])) {
@@ -278,6 +284,8 @@ class trips_controller extends base_controller {
 
             else {
                 
+                $_POST['caption'] = $caption;
+
                 # Process the upload
                 $data = Array("img" => $entry_image,
                             "entry_id" => $entry_id,

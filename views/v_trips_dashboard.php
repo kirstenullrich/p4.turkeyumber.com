@@ -1,11 +1,14 @@
-        <div class="contentwrap clearfix">
+<div class="contentwrap clearfix">
+
             <div id="dash">
+
                 <div id="top">
                     <aside class="newentry">New Entry</aside>
                     <aside class="miles">000855</aside>
                     <h1><?=$thistrip['title'];?></h1><br>
                     <h2>Dates</h2>
                 </div>
+
                 <div id="map">
                 	<?php foreach($dashmap as $mapstate): ?>
 
@@ -15,7 +18,8 @@
 
                     <img src="/../images/map_bg.png" height="330" width="500" alt="US map"/>
                 </div>
-            </div>
+
+            </div> <!--end dash -->
 
 
 
@@ -28,13 +32,14 @@
                     <h1>Title</h1><br>
 					<input type='text' name="title" required placeholder="ex. Bathroom break"><br><br>
 
-			        <?php if(isset($error) && $error == 'blank'): ?>
-			            <p class='error'>
-			                This field is required.<br>
-			            </p>
-			        <?php endif; ?>
-                        <h1>Entry text</h1><br>
-                        <textarea name="text"></textarea>
+				        <?php if(isset($error) && $error == 'blank'): ?>
+				            <p class='error'>
+				                This field is required.<br>
+				            </p>
+				        <?php endif; ?>
+                     
+                    <h1>Entry text</h1><br>
+                    <textarea name="text"></textarea>
 
 			        <input type="submit" value="Submit">
                 </form>
@@ -54,7 +59,7 @@
             	<article class="existing">
 
 	                <h1><?=$entry['title']?></h1> 
-    					<?php if (!empty($comments)): ?>
+    					<?php if (!empty($comments[0]['entry_id']) && $comments[0]['entry_id'] == $entry['entry_id']): ?>
                             <img id="comments_<?=$entry['entry_id'];?>" class="comments" src="/../images/comments.png"/>
                         <?php endif; ?>
 
@@ -88,11 +93,9 @@
 
 	            <?php if($entry['user_id'] == $user->user_id): ?>
 
-	            	<p class="modify" id="<?=$entry['entry_id']?>">Modify this entry</p>
+	            	<p class="modify" id="<?=$entry['entry_id']?>">Modify this entry or add media</p>
 
 	           	<?php endif; ?>
-
-	           	   <p class="addcomment">Comment on this entry</p>
 
 
             	<div class="mod_entry_wrap" id="<?=$entry['entry_id']?>">
@@ -100,6 +103,7 @@
 
 	            	<?php if($entry['user_id'] == $user->user_id): ?>
 
+	            	<div class="commentlist">
 						<form class="mod_entry" action="/trips/p_modify/<?php echo $entry['entry_id']; ?>/<?=$trip_id;?>" method="POST">
 							<h1>Title</h1><br><br>
 							<input type='text' name="title" required value='<?php if(isset($entry['title'])) echo $entry['title']?>'><br>
@@ -111,10 +115,11 @@
 					    <form class="mod_entry" method='POST' enctype="multipart/form-data" action='/trips/addimage/<?php echo $entry['entry_id']; ?>/<?=$trip_id;?>'>
 							<h1>Picture</h1><br>
 							<input type='file' name='img'><br>
+							<h2>Caption</h2>
 							<input type='text' name="caption" ><br>
 							<input type='submit' value='Add'>
 						</form>
-
+					</div>
 							<?php if(isset($error) && $error == 'invalid'):?>
 					            <p class='error'>
 					                Invalid file type. Please upload a JPG, PNG, or GIF file.<br>
@@ -132,11 +137,12 @@
 				</div><!--end #modify-->
 
 	    	<!-- SHOW COMMENTS -->
-    	    <?php if (!empty($comments)): ?>
+    	    <?php if (!empty($comments[0]['entry_id'])): ?>
 
     	    	<aside id="commentswrap_<?=$entry['entry_id'];?>" class="display-none commentlist">
                 	<h1>Comments</h1>
                 	<?php if($comments[0]['entry_id'] == $entry['entry_id']): ?>
+                	<h2>Posted <?=Time::display($comments[0]['created']);?> by <?=$comments[0]['first_name'];?> <?=$comments[0]['last_name'];?></h2>
                 		<p><?=$comments[0]['content'];?></p>
                 	<?php endif; ?>
                 </aside>
@@ -148,10 +154,16 @@
                 </script>
 
             <?php endif; ?>
+	           	   <p class="addcomment" id="addcomment_<?=$entry['entry_id'];?>">Comment on this entry</p>
 
-
+			<script>
+			$('#addcomment_<?=$entry['entry_id'];?>').click(function() {
+				$('#commentform_<?=$entry['entry_id'];?>').toggle();
+			});
+			</script>
+			
 			<!-- ADD COMMENT -->
-				<div class="commentform">
+				<div class="commentform" id="commentform_<?=$entry['entry_id'];?>">
 	                <h1>Add a Comment</h1><br><br>
 
 	                <form class="add_entry" action="/trips/addcomment/<?=$entry['entry_id'];?>/<?=$trip_id;?>" method="POST">
@@ -173,13 +185,13 @@
 
 
 
-        	</div><!--end #entry_list-->
 
 
 
         <?php endforeach; ?>
 
     <?php endif; ?>
+        	</div><!--end #entry_list-->
 
 </div>
 

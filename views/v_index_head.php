@@ -1,5 +1,7 @@
         <nav class="main">
-        	            	<aside class="loggedin">Hi, <?=$user->first_name;?></aside>
+        	<aside class="loggedin">
+                Hi, <?=$user->first_name;?>
+            </aside>
 
                 <ul>
                     <li><a href="/trips">All Trips</a></li>
@@ -14,7 +16,6 @@
             	<a href="/trips"><img src="/../images/notes_logo_lg.png" class="indexlogo" height="175" width="485" alt="Notes from the Road logo"/></a>
             	<div class="indexmsg"></div>
        		</div>
-
         </header>
 
         <div class="sub">

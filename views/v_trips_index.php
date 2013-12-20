@@ -4,16 +4,18 @@
         <div id="top">
             <h1>Everybody's Trips</h1>
         </div>
-    </div>
+    </div><!--end dash -->
+
+
     <?php if (!empty($trips)): ?>
 
         <?php foreach($trips as $trip): ?>
 
-            <div id="entry_list">
+        <div id="entry_list">
 
-        <article >
+            <article >
 
-                <a href="trips/dashboard/<?=$trip['trip_id']?>"><h1><?=$trip['title']?></h1></a>
+                <a href="http://p4.turkeyumber.com/trips/dashboard/<?=$trip['trip_id']?>"><h1><?=$trip['title']?></h1></a>
 
                 <h2>
                     <?=Time::display($trip['created'])?>
@@ -27,6 +29,8 @@
                     Posted by <?=$trip['first_name']?> <?=$trip['last_name']?>
                 </p>
 
+
+                <!--STAR/UNSTAR -->
 
                 <?php if(isset($star[$trip['trip_id']])): ?>
 
@@ -57,22 +61,22 @@
 
                     <?php endforeach; ?>
 
-
                 <?php endif; ?>
+
+                <!--END STAR/UNSTAR -->
 
 
               </article>
               
-            </div>
+            </div> <!--end entry_list -->
+
 
         <?php endforeach; ?>
 
     <?php else: ?>
 
-        <p >No favorites.</p>
+        <p ></p>
 
     <?php endif; ?>
 
-
-<br>
-</div>
+</div> <!--end contentwrap -->

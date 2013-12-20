@@ -1,5 +1,7 @@
         <nav class="main">
-            <aside class="loggedin">Hi, <?=$user->first_name;?></aside>
+            <aside class="loggedin">
+                Hi, <?=$user->first_name;?>
+            </aside>
 
                 <ul>
                     <li><a href="/trips">All Trips</a></li>
