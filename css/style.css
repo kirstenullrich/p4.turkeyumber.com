@@ -22,6 +22,7 @@ html {
     font-size: 1em;
     line-height: 1.25em;
     background: #576875;
+    padding: 0;
 }
 
 body {
@@ -29,7 +30,7 @@ body {
     max-width: 850px;
     margin: 0 auto;
     padding-bottom: 20px;
-        border-radius: 0 0 12px 12px;
+    border-radius: 0 0 12px 12px;
     -webkit-border-radius: 0 0 12px 12px;
     -moz-border-radius: 0 0 12px 12px;
 }
@@ -70,22 +71,27 @@ header {
     width: 100%;
 }
 
-.indexlogo, .indexmsg {
+.indexlogo, {
     position: relative;
-    display: inline-block;
+    display: block;
     text-align: center;
     z-index: 200;
-    margin: 0 10px;
+    margin-top: 20px;
 }
 
 .indexmsg {
-    max-width: 440px;
-    min-height: 50px;
+    position: relative;
+    display: block;
+    text-align: center;
+    width: 100%;
+    height: 90px;
     color: #FFF;
-    background: #A4C1D6;
+    background: url(../images/tagline.png) no-repeat center 5px #A4C1D6;
     font-weight: 700;
     font-size: 1.1em;
-    padding: 5px 10px;
+    padding-top: 4px;
+    padding-bottom: 12px;
+    margin-top: 15px;
 }
 
 .logo {
@@ -96,16 +102,25 @@ header {
     z-index: 200;
 }
 
+.smalllogo {
+    position: relative;
+    display: block;
+    margin-left: 75px;
+    margin-bottom: 15px;
+    float: left;
+    z-index: 200;
+}
+
 aside.loggedin {
-    font-size: .8em;
+    font-size: .9em;
     font-weight: 400;
     color: #999;
     display: inline-block;
-    float: right;
-    text-align: right;
-    position: relative;
-    margin: -20px 75px 20px 0;
-    width: 100%;
+    text-align: left;
+    position: absolute;
+    top: 10px;
+    left:25px;
+    z-index: 999;
 }
 
 .bold {
@@ -115,7 +130,7 @@ aside.loggedin {
 /* PAGE NAV */
 nav {
     width: 100%;
-    margin: 0 auto;
+    margin: 0 auto 15px auto;
     position: relative;
     font-size: .9em;
     font-family: 'Open Sans', sans-serif;
@@ -125,13 +140,10 @@ nav {
     z-index: 100;
 }
 
-.hidden {
-    visibility: hidden;
-}
-
 nav ul {
     margin: 0 auto;
     overflow: hidden;
+    padding: 0;
 }
 
 nav ul li {
@@ -139,7 +151,7 @@ nav ul li {
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
     display: inline-block;
-    padding-top: 4px;
+    padding-top: 10px;
 }
 
 nav ul li a {
@@ -159,28 +171,33 @@ nav ul li a:hover {
 
 .main ul li a {
     color: #658BB2;
-    padding: 9px 0 9px 20px;
+    padding: 10px 0 8px 20px;
 }
 
 .last {
-    margin-right: 75px;
+    margin-right: 25px;
 }
 
 .sub {
     background-color: rgb(146,25,28);
     width: 100%;
-    height: 40px;
+    height: 30px;
     text-align: center;
     z-index: 1000;
     display: block;
     position: relative;
+    margin: 20px auto 0 auto;
+    padding: 0;
 }
 
-.sub ul li {
+.sub h2 {
     color: #FFF;
-    font-size: .9em;
     font-weight: 700;
-    list-style-type: none;
+    font-size: .9em;
+    margin: 4px auto 0 auto;
+    padding: 0;
+    text-align: center;
+    clear: both;
 }
 
 
@@ -195,9 +212,9 @@ nav ul li a:hover {
 
 #dash {
     background: url(../images/leatherbg.jpg) repeat;
-    border-radius: 0 0 12px 12px;
-    -webkit-border-radius: 0 0 12px 12px;
-    -moz-border-radius: 0 0 12px 12px;
+    border-radius: 0 0 6px 6px;
+    -webkit-border-radius: 0 0 6px 6px;
+    -moz-border-radius: 0 0 6px 6px;
     width: 100%;
     margin: 0 auto;
     padding: 0;
@@ -270,6 +287,7 @@ nav ul li a:hover {
     padding: 0 0 2px 5px;
     text-align: center;
 }
+
 #dash #map {
     position: relative;
     height: 330px;
@@ -277,16 +295,9 @@ nav ul li a:hover {
     margin: 0 auto 24px auto;
     background-color: #fff;
     border: #e7d7ba dashed 1px;
-    border-radius: 12px;
-    -webkit-border-radius: 12px;
-    -moz-border-radius: 12px;
-}
-
-#dash #map img{
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 1;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
 }
 
 .state {
@@ -295,18 +306,7 @@ nav ul li a:hover {
     right: 0;
     height: 330px;
     width: 500px;
-    z-index: 500;
 }
-
-.vt {
-    background: url(../images/map_vt.png) no-repeat; 
-}
-
-.ny {
-    background: url(../images/map_ny.png) no-repeat; 
-}
-
-
 
 #entry_list, #add_entry{
     font-family: 'Open Sans', sans-serif;
@@ -319,9 +319,9 @@ nav ul li a:hover {
     margin:15px 25px 25px 25px;
     padding: 30px;
     clear: left;
-    border-radius: 12px;
-    -webkit-border-radius: 12px;
-    -moz-border-radius: 12px;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
     border: #e7d7ba dashed 1px;
 }
 
@@ -359,7 +359,7 @@ a.picdelete, a.link {
     color: rgb(146,25,28);
     float: left;
     margin-bottom: 10px;
-        display: block;
+    display: block;
     position: relative;
 }
 
@@ -383,21 +383,19 @@ a.picdelete, a.link {
     margin: 0 0 20px 0;
     }
 
-.posted  {
+#entry_list p.posted  {
     font-size: .85em;
     font-weight: 400;
     font-family: 'Open Sans', sans-serif;
     color: #658BB2;
-    float: left;  
-    text-align: left;
     display: inline-block;
+    width: 50%;
     position: relative;
-    margin: 0 0 10px 0;
-    padding-bottom: 10px;
-    width: 100%;
+    margin: 0;
+    padding-top: 5px;
 }
 
-a.pic, img.text {
+a.pic, img.text, img.comments {
     font-size: .75em;
     font-weight: 700;
     color: #A4C1D6;
@@ -405,17 +403,29 @@ a.pic, img.text {
     float: right;
     position: relative;
     margin: 0 5px;
+    padding: 0 5px;
     cursor: pointer;
 }
 
-a.modify {
+#entry_list p.modify, #entry_list p.addcomment {
     font-size: .75em;
     font-weight: 700;
     color: rgb(146,25,28);
-    display: block;
-    float: left;
+    display: inline-block;
     position: relative;
-    width: 100%;
+    cursor: pointer;
+    width: 50%;
+    margin: 0;
+}
+
+#entry_list p.modify{
+    float: left;
+    clear: left;
+}
+
+#entry_list p.addcomment {
+    float: right;
+    text-align: right;
 }
 
 div.mod_entry_wrap {
@@ -423,29 +433,60 @@ div.mod_entry_wrap {
     display: none;
 }
 
-aside.star {
-    font-size: .75em;
-    font-weight: 700;
-    color: #A4C1D6;
-    display: block;
+aside.star, aside.starlink a {
+    color: #658BB2;
+    display: inline-block;
     float: right;
     position: relative;
-    margin: 0;
+    text-align: right;
+}
+
+aside.starlink a{
+    margin-right: 10px;
+    font-weight: 400;
+    font-size: .85em;
+}
+
+aside.star{
+    margin-right: 10px;
+    font-weight: 700;
+    font-size: 1em;
 }
 
 aside.star:before {
     content:url(../images/star.png);
-    margin-right: 5px;
+    margin-right: 3px;
+    margin-top: -1px;
     position: relative;
     height: 100%;
-    width: 15px;
+    width: 19px;
     display: block;
     float: left;
 }
 
+#entry_list .commentlist {
+    clear: both;
+    width: 100%;
+    position: relative;
+    border: none;
+}
+
+#entry_list .commentlist h1 {
+    margin-top: 25px;
+    padding-top: 4px;
+    border-top: #658BB2 solid 1px;
+    width: 100%;
+}
+
+#entry_list .commentform h1 {
+    display: block;
+    position: relative;
+    margin-top: 25px;
+    margin-bottom: 4px;
+}
 
 form.add_entry, form.mod_entry,
-form.otherform{
+form.otherform {
     clear: both;
     display: block;
     max-width: 740px;
@@ -499,18 +540,172 @@ form.add_entry input[type=submit], form.mod_entry input[type=submit], form.other
     margin-top: 40px;
 }
 
-.error {
+.red {
+    color: red;
+}
+
+.error{
     font-size: 1em;
     font-weight: 400;
     color: red;
     margin: 8px 0;
+    padding-top: 10px;
 }
 
-.error a{
-    color: #555;
+/* STATES */
+.AL {
+    background: url(../images/map_al.png) no-repeat; 
 }
 
+.AZ {
+    background: url(../images/map_az.png) no-repeat; 
+}
 
+.AR {
+    background: url(../images/map_ar.png) no-repeat; 
+}
+
+.CA {
+    background: url(../images/map_ca.png) no-repeat; 
+}
+
+.CO {
+    background: url(../images/map_co.png) no-repeat; 
+}
+
+.CT {
+    background: url(../images/map_ct.png) no-repeat; 
+}
+
+.DE {
+    background: url(../images/map_de.png) no-repeat; 
+}
+
+.FL {
+    background: url(../images/map_fl.png) no-repeat; 
+}
+
+.GA {
+    background: url(../images/map_ga.png) no-repeat; 
+}
+
+.ID{
+    background: url(../images/map_id.png) no-repeat; 
+}
+.IL {
+    background: url(../images/map_il.png) no-repeat; 
+}
+.IN{
+    background: url(../images/map_in.png) no-repeat; 
+}
+.IA {
+    background: url(../images/map_ia.png) no-repeat; 
+}
+.KS  {
+    background: url(../images/map_ks.png) no-repeat; 
+}
+.KY {
+    background: url(../images/map_ky.png) no-repeat; 
+}
+.LA{
+    background: url(../images/map_la.png) no-repeat; 
+}
+.ME{
+    background: url(../images/map_me.png) no-repeat; 
+}
+.MD {
+    background: url(../images/map_md.png) no-repeat; 
+}
+.MA {
+    background: url(../images/map_ma.png) no-repeat; 
+}
+.MI {
+    background: url(../images/map_mi.png) no-repeat; 
+}
+.MN {
+    background: url(../images/map_mn.png) no-repeat; 
+}
+.MS   {
+    background: url(../images/map_ms.png) no-repeat; 
+}
+.MO   {
+    background: url(../images/map_mo.png) no-repeat; 
+}
+.MT  {
+    background: url(../images/map_mt.png) no-repeat; 
+}
+.NE   {
+    background: url(../images/map_ne.png) no-repeat; 
+}
+.NV  {
+    background: url(../images/map_nv.png) no-repeat; 
+}
+.NH   {
+    background: url(../images/map_nh.png) no-repeat; 
+}
+.NJ   {
+    background: url(../images/map_nj.png) no-repeat; 
+}
+.NM  {
+    background: url(../images/map_nm.png) no-repeat; 
+}
+.NY   {
+    background: url(../images/map_ny.png) no-repeat; 
+}
+.NC  {
+    background: url(../images/map_nc.png) no-repeat; 
+}
+.ND  {
+    background: url(../images/map_nd.png) no-repeat; 
+}
+.OH  {
+    background: url(../images/map_oh.png) no-repeat; 
+}
+.OK  {
+    background: url(../images/map_ok.png) no-repeat; 
+}
+.OR {
+    background: url(../images/map_or.png) no-repeat; 
+}
+.PA  {
+    background: url(../images/map_pa.png) no-repeat; 
+}
+.RI  {
+    background: url(../images/map_ri.png) no-repeat; 
+}
+.SC  {
+    background: url(../images/map_sc.png) no-repeat; 
+}
+.SD {
+    background: url(../images/map_sd.png) no-repeat; 
+}
+.TN {
+    background: url(../images/map_tn.png) no-repeat; 
+}
+.TX {
+    background: url(../images/map_tx.png) no-repeat; 
+}
+.UT {
+    background: url(../images/map_ut.png) no-repeat; 
+}
+.VT {
+    background: url(../images/map_vt.png) no-repeat; 
+}
+.VA {
+    background: url(../images/map_va.png) no-repeat; 
+}
+.WA {
+    background: url(../images/map_wa.png) no-repeat; 
+}
+.WV {
+    background: url(../images/map_wv.png) no-repeat; 
+}
+.WI{
+    background: url(../images/map_wi.png) no-repeat; 
+}
+.WY{
+    background: url(../images/map_wy.png) no-repeat; 
+}
 /*! HTML5 Boilerplate v4.3.0 | MIT License | http://h5bp.com/ */
 
 /*

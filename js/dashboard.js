@@ -1,4 +1,5 @@
 $('#add_entry').hide();
+$('.commentform').addClass("display-none");
 
 $('.newentry').click(function() {
 	$('#add_entry').toggle();
@@ -10,4 +11,7 @@ $('.modify').click(function() {
 	return false;
 });
 
+$('.addcomment').click(function() {
+	$('.commentform').toggle();
+});
 //console.log("dash loaded");

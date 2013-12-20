@@ -72,7 +72,7 @@ extends base_controller {
         # Setup view
             $this->template->head = View::instance("v_index_head");
             $this->template->content = View::instance('v_users_login');
-            $this->template->title   = "Login";
+            $this->template->title   = "Log In";
             $this->template->content->error = $error;
 
         # Render template
@@ -199,5 +199,8 @@ extends base_controller {
         # Go back to the profile page
         Router::redirect('/users/profile/');
     }
+
+
+
 
 } # end of the class

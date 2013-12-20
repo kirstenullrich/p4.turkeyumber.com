@@ -1,28 +1,36 @@
-<div>
+<div class="contentwrap clearfix">
 
-    <h1>Log in</h1>
+    <div id="dash">
+        <div id="top">
+            <h1>Log In</h1>
+        </div>
+    </div>
 
-    <p>Want to post? <a href="/users/signup">Sign up</a>.</p>
+    <div id="entry_list">
 
-    <form class="otherform" method='POST' action='/users/p_login'>
+        <p>Want to post or create a starred list of your favorite trips? <a href="/users/signup">Sign up!</a></p>
 
-        <label for="email">Email</label>
-        <input type='text' name='email'>
+        <form class="otherform" method='POST' action='/users/p_login'>
 
-        <label for="password">Password</label>
-        <input type='password' name='password'>
+            <label for="email">Email</label>
+            <input type='text' required name='email'>
 
-        <br><br>
+            <label for="password">Password</label>
+            <input type='password' required name='password'>
 
-        <input type='submit' value='Log in'>
+            <br><br>
 
-        <?php if(isset($error)): ?>
-            <p class='error'>
-                Login failed! Please double check your email and password. <br>
-                If you've never posted before <a href="/users/signup">sign up here</a> first.
-            </p>
-        <?php endif; ?>
+            <input type='submit' value='Log in'>
 
-    </form>
+            <?php if(isset($error)): ?>
+                <p class='red error'>
+                    Login failed! Please double check your email and password. <br>
+                    If you've never posted before <a href="/users/signup">sign up here</a> first.
+                </p>
+            <?php endif; ?>
+
+        </form>
+
+    </div>
     
 </div>

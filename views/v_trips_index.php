@@ -13,61 +13,56 @@
 
         <article >
 
-
-
-
-                <h1><?=$trip['title']?></h1>
+                <a href="trips/dashboard/<?=$trip['trip_id']?>"><h1><?=$trip['title']?></h1></a>
 
                 <h2>
                     <?=Time::display($trip['created'])?>
                 </h2>
-
-
                 
-                <p><?=$trip['description']?></p>
+                <p>
+                    <?=$trip['description']?>
+                </p>
 
-                <p class="posted">Posted by <?=$trip['first_name']?> <?=$trip['last_name']?></p>
+                <p class="posted">
+                    Posted by <?=$trip['first_name']?> <?=$trip['last_name']?>
+                </p>
 
-                                <?php if(isset($star[$trip['trip_id']])): ?>
+
+                <?php if(isset($star[$trip['trip_id']])): ?>
+
+                    <aside class="starlink"><a href="/trips/unstar/<?=$trip['trip_id']?>"> | Unstar</a></aside>
 
                     <?php foreach($stars as $totalstars):?>
 
                         <?php if ($totalstars['trip_id'] == $trip['trip_id']): ?>
 
-                            <aside class="star"> <?=$totalstars['total']?> stars.</aside>
+                            <aside class="star"> <?=$totalstars['total']?></aside>
 
                         <?php endif; ?>
 
                     <?php endforeach; ?>
 
-                    <aside class="star"><a href="/trips/unstar/<?=$trip['trip_id']?>">Unstar</a></aside>
 
                 <?php else: ?>
 
+                    <aside class="starlink"><a href="/trips/star/<?=$trip['trip_id']?>">Star this</a></aside>
+
                     <?php foreach($stars as $totalstars):?>
 
                         <?php if ($totalstars['trip_id'] == $trip['trip_id']): ?>
 
-                            <aside  class="star"><?=$totalstars['total']?> stars.</aside>
+                            <aside class="star"><?=$totalstars['total']?></aside>
 
                         <?php endif; ?>
 
                     <?php endforeach; ?>
 
-                    <aside class="star"><a href="/trips/star/<?=$trip['trip_id']?>">Star this</a></aside>
 
                 <?php endif; ?>
 
 
-                 <a class="more" href="trips/dashboard/<?=$trip['trip_id']?>">See details</a>
-
-
-
-
-            
-
-
               </article>
+              
             </div>
 
         <?php endforeach; ?>
@@ -79,6 +74,5 @@
     <?php endif; ?>
 
 
-<?php print_r($here['state']);?>
 <br>
 </div>

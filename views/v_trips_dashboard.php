@@ -7,8 +7,10 @@
                     <h2>Dates</h2>
                 </div>
                 <div id="map">
-                	<?php foreach($entries as $entry): ?>
-                    	<div class="state <?=$entry['state'];?>"></div>
+                	<?php foreach($dashmap as $mapstate): ?>
+
+                    	<div class="<?=$mapstate['state'];?> state"></div>
+
                     <?php endforeach; ?>
 
                     <img src="/../images/map_bg.png" height="330" width="500" alt="US map"/>
@@ -38,62 +40,6 @@
                 </form>
             </article>
 
-	<!--	Need PHP if statement for whether this entry is being added in real time or not; if not, display this list
-
-					<label for="state">State</label>
-						<select name="state">
-							<option value="AL">Alabama</option>
-							<option value="AZ">Arizona</option>
-							<option value="AR">Arkansas</option>
-							<option value="CA">California</option>
-							<option value="CO">Colorado</option>
-							<option value="CT">Connecticut</option>
-							<option value="DE">Delaware</option>
-							<option value="DC">District Of Columbia</option>
-							<option value="FL">Florida</option>
-							<option value="GA">Georgia</option>
-							<option value="ID">Idaho</option>
-							<option value="IL">Illinois</option>
-							<option value="IN">Indiana</option>
-							<option value="IA">Iowa</option>
-							<option value="KS">Kansas</option>
-							<option value="KY">Kentucky</option>
-							<option value="LA">Louisiana</option>
-							<option value="ME">Maine</option>
-							<option value="MD">Maryland</option>
-							<option value="MA">Massachusetts</option>
-							<option value="MI">Michigan</option>
-							<option value="MN">Minnesota</option>
-							<option value="MS">Mississippi</option>
-							<option value="MO">Missouri</option>
-							<option value="MT">Montana</option>
-							<option value="NE">Nebraska</option>
-							<option value="NV">Nevada</option>
-							<option value="NH">New Hampshire</option>
-							<option value="NJ">New Jersey</option>
-							<option value="NM">New Mexico</option>
-							<option value="NY">New York</option>
-							<option value="NC">North Carolina</option>
-							<option value="ND">North Dakota</option>
-							<option value="OH">Ohio</option>
-							<option value="OK">Oklahoma</option>
-							<option value="OR">Oregon</option>
-							<option value="PA">Pennsylvania</option>
-							<option value="RI">Rhode Island</option>
-							<option value="SC">South Carolina</option>
-							<option value="SD">South Dakota</option>
-							<option value="TN">Tennessee</option>
-							<option value="TX">Texas</option>
-							<option value="UT">Utah</option>
-							<option value="VT">Vermont</option>
-							<option value="VA">Virginia</option>
-							<option value="WA">Washington</option>
-							<option value="WV">West Virginia</option>
-							<option value="WI">Wisconsin</option>
-							<option value="WY">Wyoming</option>
-						</select>	-->
-
-
 
 
 <!-- LIST OF EXISTING ENTRIES -->
@@ -108,7 +54,11 @@
             	<article class="existing">
 
 	                <h1><?=$entry['title']?></h1> 
-	                	<?php if($entry['pic_id'] == '1'): ?>
+    					<?php if (!empty($comments)): ?>
+                            <img id="comments_<?=$entry['entry_id'];?>" class="comments" src="/../images/comments.png"/>
+                        <?php endif; ?>
+
+                        <?php if($entry['pic_id'] == '1'): ?>
                             <a id="pic_<?=$entry['entry_id'];?>" href="../gallery/<?=$entry['entry_id'];?>/<?=$trip_id;?>" class="pic"><img src="/../images/pic.png"/></a>
                         <?php endif; ?>
 
@@ -131,14 +81,18 @@
 					$('#text_<?=$entry['entry_id'];?>').click(function() {
 						$('#textwrap_<?=$entry['entry_id'];?>').toggle();
 					});
+
 		        </script>
+
+
 
 	            <?php if($entry['user_id'] == $user->user_id): ?>
 
-	            	<a class="modify" href="#" id="<?=$entry['entry_id']?>">Modify this entry</a>
+	            	<p class="modify" id="<?=$entry['entry_id']?>">Modify this entry</p>
 
 	           	<?php endif; ?>
 
+	           	   <p class="addcomment">Comment on this entry</p>
 
 
             	<div class="mod_entry_wrap" id="<?=$entry['entry_id']?>">
@@ -177,7 +131,51 @@
 
 				</div><!--end #modify-->
 
+	    	<!-- SHOW COMMENTS -->
+    	    <?php if (!empty($comments)): ?>
+
+    	    	<aside id="commentswrap_<?=$entry['entry_id'];?>" class="display-none commentlist">
+                	<h1>Comments</h1>
+                	<?php if($comments[0]['entry_id'] == $entry['entry_id']): ?>
+                		<p><?=$comments[0]['content'];?></p>
+                	<?php endif; ?>
+                </aside>
+
+                <script>
+					$('#comments_<?=$entry['entry_id'];?>').click(function() {
+						$('#commentswrap_<?=$entry['entry_id'];?>').toggle();
+					});
+                </script>
+
+            <?php endif; ?>
+
+
+			<!-- ADD COMMENT -->
+				<div class="commentform">
+	                <h1>Add a Comment</h1><br><br>
+
+	                <form class="add_entry" action="/trips/addcomment/<?=$entry['entry_id'];?>/<?=$trip_id;?>" method="POST">
+						<textarea name="content" required placeholder="Write a comment!"></textarea><br>
+
+				        <?php if(isset($missing)):?>
+				            <p class='red error'>
+				                Sorry, no blank entries.<br>
+				            </p>
+				        <?php endif; ?>
+
+				        <input type="submit" value="Submit">
+	                </form>
+	            </div>
+
+
+	        	</div><!--end #entry_list-->
+
+
+
+
         	</div><!--end #entry_list-->
+
+
 
         <?php endforeach; ?>
 

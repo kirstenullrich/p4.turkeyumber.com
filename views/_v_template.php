@@ -34,16 +34,16 @@
 
         <nav class="main">
                 <ul>
-                    
+                    <li><a class="last" href="/users/login">Log In</a></li>
+                    <li><a class="last" href="/users/signup">Sign Up</a></li>
                 </ul>
         </nav>
 
-        <header class="clearfix index">
+         <header class="clearfix index">
             <div class="indexwrap">
-                <img src="/../images/notes_logo_lg.png" class="indexlogo" height="175" width="485" alt="Notes from the Road logo"/>
-                <div class="indexmsg">Share stories and photos from your trip in the continental U.S. as you go!</div>
+                <a href="/open"><img src="/../images/notes_logo_lg.png" class="indexlogo" height="175" width="485" alt="Notes from the Road logo"/></a>
+                <div class="indexmsg"></div>
             </div>
-
         </header>
 
         <div class="sub">
