@@ -169,9 +169,24 @@ class trips_controller extends base_controller {
             $q = "SELECT
             * from entries
             WHERE trip_id = ".$trip_id.
-            " ORDER BY created DESC";
+            " ORDER BY created ASC";
 
             $entries = DB::instance(DB_NAME)->select_rows($q);
+
+            $q = "SELECT created from entries
+            WHERE trip_id = ".$trip_id.
+            " ORDER BY created ASC
+            LIMIT 1";
+
+            $start = DB::instance(DB_NAME)->select_rows($q);
+
+            $q = "SELECT created from entries
+            WHERE trip_id = ".$trip_id.
+            " ORDER BY created DESC
+            LIMIT 1";
+
+            $last = DB::instance(DB_NAME)->select_rows($q);
+
 
             $q = "SELECT
             comments.entry_id AS thisentrycomment, 
@@ -189,7 +204,7 @@ class trips_controller extends base_controller {
             INNER JOIN users
             ON comments.user_id = users.user_id
             WHERE trip_id = ".$trip_id.
-            " ORDER BY created DESC";
+            " ORDER BY created ASC";
 
             $comments = DB::instance(DB_NAME)->select_rows($q);
 
@@ -219,6 +234,8 @@ class trips_controller extends base_controller {
             $this->template->content->gallery = $gallery;
             $this->template->content->dashmap = $dashmap;
             $this->template->content->comments = $comments;
+            $this->template->content->start = $start;
+            $this->template->content->last = $last;
 
            // $this->template->content->connections = $connections;
 

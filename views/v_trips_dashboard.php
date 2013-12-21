@@ -1,12 +1,13 @@
 <div class="contentwrap clearfix">
 
+			<!-- TOP DASHBOARD WITH MAP -->
+
             <div id="dash">
 
                 <div id="top">
                     <aside class="newentry">New Entry</aside>
-                    <aside class="miles">000855</aside>
                     <h1><?=$thistrip['title'];?></h1><br>
-                    <h2>Dates</h2>
+                    <h2><?=Time::display($start[0]['created']);?> to <?=Time::display($last[0]['created']);?></h2>
                 </div>
 
                 <div id="map">
@@ -23,7 +24,8 @@
 
 
 
-<!-- ADD NEW ENTRY -->
+			<!-- ADD NEW ENTRY -->
+
             <article id="add_entry" class="entry">
                 <aside class="expand"><img src="images/toggle_on.png"></aside>
                 <h1 class="big">New Entry</h1><br><br>
@@ -47,8 +49,7 @@
 
 
 
-<!-- LIST OF EXISTING ENTRIES -->
-
+	<!-- LIST OF EXISTING ENTRIES -->
 
     <?php if (!empty($entries)): ?>
 
@@ -82,6 +83,8 @@
 		        </article>
 
 
+				<!-- SHOW/HIDE ENTRY TEXT -->
+
 		        <script>
 					$('#text_<?=$entry['entry_id'];?>').click(function() {
 						$('#textwrap_<?=$entry['entry_id'];?>').toggle();
@@ -91,12 +94,16 @@
 
 
 
+				<!-- MODIFY ENTRY LINK-->
+
 	            <?php if($entry['user_id'] == $user->user_id): ?>
 
 	            	<p class="modify" id="<?=$entry['entry_id']?>">Modify this entry or add media</p>
 
 	           	<?php endif; ?>
 
+
+				<!-- MODIFY FORM-->
 
             	<div class="mod_entry_wrap" id="<?=$entry['entry_id']?>">
             		<br>
@@ -136,16 +143,18 @@
 
 				</div><!--end #modify-->
 
-	    	<!-- SHOW COMMENTS -->
-    	    <?php if (!empty($comments[0]['entry_id'])): ?>
 
-    	    	<aside id="commentswrap_<?=$entry['entry_id'];?>" class="display-none commentlist">
+
+	    	<!-- SHOW COMMENTS -->
+
+    	    	<aside id="commentswrap_<?=$entry['entry_id'];?>" class="commentlist display-none">
                 	<h1>Comments</h1>
-                	<?php if($comments[0]['entry_id'] == $entry['entry_id']): ?>
-                	<h2>Posted <?=Time::display($comments[0]['created']);?> by <?=$comments[0]['first_name'];?> <?=$comments[0]['last_name'];?></h2>
-                		<p><?=$comments[0]['content'];?></p>
-                	<?php endif; ?>
-                </aside>
+                	     <?php foreach($comments as $comment): ?>
+
+		                	<?php if($comment['entry_id'] == $entry['entry_id']): ?>
+		                	<h2>Posted <?=Time::display($comment['created']);?> by <?=$comment['first_name'];?> <?=$comment['last_name'];?></h2>
+		                		<p><?=$comment['content'];?></p>
+		                	<?php endif; ?>
 
                 <script>
 					$('#comments_<?=$entry['entry_id'];?>').click(function() {
@@ -153,15 +162,22 @@
 					});
                 </script>
 
-            <?php endif; ?>
+        				<?php endforeach; ?>
+                </aside>
+
 	           	   <p class="addcomment" id="addcomment_<?=$entry['entry_id'];?>">Comment on this entry</p>
+
+
+			<!-- ADD COMMENT LINK-->
 
 			<script>
 			$('#addcomment_<?=$entry['entry_id'];?>').click(function() {
 				$('#commentform_<?=$entry['entry_id'];?>').toggle();
+				return false;
 			});
 			</script>
-			
+
+
 			<!-- ADD COMMENT -->
 				<div class="commentform" id="commentform_<?=$entry['entry_id'];?>">
 	                <h1>Add a Comment</h1><br><br>
@@ -179,19 +195,12 @@
 	                </form>
 	            </div>
 
-
-	        	</div><!--end #entry_list-->
-
-
-
-
-
-
+	     	</div>
 
         <?php endforeach; ?>
 
     <?php endif; ?>
-        	</div><!--end #entry_list-->
+    </div><!--end #entry_list-->
 
 </div>
 
