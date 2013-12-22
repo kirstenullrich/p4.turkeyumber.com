@@ -6,7 +6,7 @@ class trips_controller extends base_controller {
 
         # Make sure user is logged in if they want to use anything in this controller
         if(!$this->user) {
-            die("Members only. <a href='/users/login'>Login</a>");
+            die(Router::redirect("/users/login"));
         }
     }
 
@@ -37,9 +37,7 @@ class trips_controller extends base_controller {
         $_POST['created'] = Time::now();
         $_POST['modified'] = Time::now();
 
-        $_POST['miles'] = "";
-        $_POST['coverimg'] = "";
-        $_POST['starred'] = "";
+        $_POST['coverimg'] = "fpo.jpg";
 
         # Insert
         # Note we didn't have to sanitize any of the $_POST data because we're using the insert method which does it for us
@@ -65,6 +63,7 @@ class trips_controller extends base_controller {
             trips.title,
             trips.description,
             trips.created,
+            trips.coverimg,
             trips.user_id AS trip_user_id,
             users.first_name,
             users.last_name,
@@ -207,6 +206,8 @@ class trips_controller extends base_controller {
             " ORDER BY created ASC";
 
             $comments = DB::instance(DB_NAME)->select_rows($q);
+            $entrycomment = Map::super_unique($comments);
+
 
             $q = "SELECT 
             pic_id, entry_id 
@@ -234,6 +235,7 @@ class trips_controller extends base_controller {
             $this->template->content->gallery = $gallery;
             $this->template->content->dashmap = $dashmap;
             $this->template->content->comments = $comments;
+            $this->template->content->entrycomment = $entrycomment;
             $this->template->content->start = $start;
             $this->template->content->last = $last;
 
@@ -306,6 +308,7 @@ class trips_controller extends base_controller {
                 # Process the upload
                 $data = Array("img" => $entry_image,
                             "entry_id" => $entry_id,
+                            "caption" => $caption,
                             "created" => Time::now());
                 DB::instance(DB_NAME)->insert("pics", $data);
 
@@ -356,6 +359,61 @@ class trips_controller extends base_controller {
             $this->template->content->title = $title;
 
             echo $this->template;
+
+    }
+
+    public function coverimage($trip_id, $error = NULL) {
+
+        # Setup view
+            $this->template->head = View::instance("v_trips_head");
+            $this->template->content = View::instance('v_trips_coverimage');
+            $this->template->title   = "Cover image";
+            $this->template->content->error = $error;
+            $this->template->content->trip_id = $trip_id;
+
+            # Query
+            $q = 'SELECT *
+            FROM trips
+            WHERE trip_id = '.$trip_id;
+
+            $trips = DB::instance(DB_NAME)->select_row($q);
+            $this->template->content->trips = $trips;
+
+        # Render template
+            echo $this->template;
+    }
+
+     public function p_coverimage($trip_id) {
+
+        # Upload a profile image
+            if ($_FILES['coverimg']['error'] == 0 && $_FILES['coverimg']['size'] < 800*800){
+            $image = Upload::upload($_FILES, "/uploads/avatars/", array("JPG", "JPEG", "jpg", "jpeg", "gif", "GIF", "png", "PNG"), $trip_id);
+
+        # Error message if the file type isn't on the list
+            if($image == 'Invalid file type.') {
+            Router::redirect("/trips/coverimage/".$trip_id."/error");
+            }
+
+            else {
+
+                # Process the upload
+                $data = Array("coverimg" => $image);
+                DB::instance(DB_NAME)->update("trips", $data, "WHERE trip_id = ".$trip_id);
+
+                # Resize the image
+                $imgObj = new Image(APP_PATH."uploads/avatars/". $image);
+                $imgObj->resize(100,100, "crop");
+                $imgObj->save_image(APP_PATH."uploads/avatars/". $image);
+                # Go back to the profile page
+                Router::redirect('/trips/coverimage/'.$trip_id);
+            }
+        }
+        else
+        {
+            # Error message if file isn't able to be processed
+            Router::redirect("/trips/coverimage/".$trip_id."/error");
+        }
+
 
     }
 

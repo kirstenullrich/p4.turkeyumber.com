@@ -6,7 +6,7 @@
         </div>
     </div>
 
-    <div id="entry_list">
+    <div class="entry_list">
 		<p>Enter a trip name and a brief decription (this is what everyone else sees first).</p>
 		<form class="otherform" action="/trips/p_add" method="POST">
 

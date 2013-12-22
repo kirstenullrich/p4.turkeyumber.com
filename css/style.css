@@ -309,7 +309,7 @@ nav ul li a:hover {
     width: 500px;
 }
 
-#entry_list, #add_entry{
+.entry_list, #add_entry{
     font-family: 'Open Sans', sans-serif;
     width: 100%;
     max-width: 590px;
@@ -326,7 +326,7 @@ nav ul li a:hover {
     border: #e7d7ba dashed 1px;
 }
 
-#entry_list img  {
+.entry_list img  {
     margin: 0 auto 10px auto;
 }
 
@@ -346,7 +346,7 @@ a.picdelete, a.link {
     margin-bottom: 8px;
 }
 
-#entry_list h1, #modify h1, #add_entry h1 {
+.entry_list h1, #add_entry h1 {
     font-size: 1em;
     font-weight: 700;
     color: rgb(146,25,28);
@@ -364,7 +364,7 @@ a.picdelete, a.link {
     position: relative;
 }
 
-#entry_list h2  {
+.entry_list h2  {
     font-size: .85em;
     font-weight: 400;
     font-family: 'Open Sans', sans-serif;
@@ -377,14 +377,14 @@ a.picdelete, a.link {
     clear:left;
 }
 
-#entry_list p{
+.entry_list p{
     text-align: left;
     float: left;
     width: 100%;
     margin: 0 0 20px 0;
     }
 
-#entry_list p.posted  {
+.entry_list p.posted  {
     font-size: .85em;
     font-weight: 400;
     font-family: 'Open Sans', sans-serif;
@@ -408,7 +408,7 @@ a.pic, img.text, img.comments {
     cursor: pointer;
 }
 
-#entry_list p.modify, #entry_list p.addcomment {
+.entry_list p.modify, .entry_list p.addcomment {
     font-size: .75em;
     font-weight: 700;
     color: rgb(146,25,28);
@@ -419,15 +419,28 @@ a.pic, img.text, img.comments {
     margin: 0;
 }
 
-#entry_list p.modify{
+.entry_list p.modify{
     float: left;
     clear: left;
 }
 
-#entry_list p.addcomment {
+.entry_list p.addcomment {
     float: right;
     text-align: right;
     clear: right;
+}
+
+div.cover {
+    float: left;
+    padding-right: 10px;
+    position: relative;
+    display: inline-block;
+}
+
+div.tripinfo {
+    float: left;
+    position: relative;
+    display: inline-block;    
 }
 
 div.mod_entry_wrap {
@@ -476,6 +489,8 @@ aside.star:before {
 #entry_list .commentlist h1 {
     margin-top: 25px;
     padding-top: 4px;
+    margin-bottom: 10px;
+    font-size: .875em;
     border-top: #658BB2 solid 1px;
     width: 100%;
 }

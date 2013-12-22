@@ -8,15 +8,16 @@
             <a href="../../dashboard/<?=$trip_id;?>">Back</a>
 
         <?php foreach($gallery as $picture): ?>
-
-            <div id="entry_list">
+<?php print_r($picture);?>
+            <div class="entry_list">
 
                 <div class="img">
                     <img src="/../uploads/entries/<?=$picture['img'];?>"/>
-                </div>
+                <br>
                 <p>
                     <?=$picture['caption']?>                
                 </p>
+                </div>
 
             </div>
         <?php endforeach; ?>

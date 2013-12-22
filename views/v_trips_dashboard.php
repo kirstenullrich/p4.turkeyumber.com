@@ -5,9 +5,15 @@
             <div id="dash">
 
                 <div id="top">
+                	<aside class="miles">XMILES</aside>
                     <aside class="newentry">New Entry</aside>
                     <h1><?=$thistrip['title'];?></h1><br>
-                    <h2><?=Time::display($start[0]['created']);?> to <?=Time::display($last[0]['created']);?></h2>
+                    <?php if(!empty($start[0]['created'])): ?>
+                    	<h2><?=Time::display($start[0]['created']);?> 
+                    		<?php if(!empty($last[0]['created']) && ($last[0]['created'] !== $start[0]['created'])): ?>
+                    		to <?=Time::display($last[0]['created']);?></h2>
+                    		<?php endif; ?>
+                    <?php endif; ?>
                 </div>
 
                 <div id="map">
@@ -55,14 +61,11 @@
 
         <?php foreach($entries as $entry): ?>
 
-            <div id="entry_list">
+            <div class="entry_list">
 
             	<article class="existing">
 
 	                <h1><?=$entry['title']?></h1> 
-    					<?php if (!empty($comments[0]['entry_id']) && $comments[0]['entry_id'] == $entry['entry_id']): ?>
-                            <img id="comments_<?=$entry['entry_id'];?>" class="comments" src="/../images/comments.png"/>
-                        <?php endif; ?>
 
                         <?php if($entry['pic_id'] == '1'): ?>
                             <a id="pic_<?=$entry['entry_id'];?>" href="../gallery/<?=$entry['entry_id'];?>/<?=$trip_id;?>" class="pic"><img src="/../images/pic.png"/></a>
@@ -147,20 +150,15 @@
 
 	    	<!-- SHOW COMMENTS -->
 
-    	    	<aside id="commentswrap_<?=$entry['entry_id'];?>" class="commentlist display-none">
+    	    	<aside id="commentswrap_<?=$entry['entry_id'];?>" class="commentlist">
                 	<h1>Comments</h1>
+
                 	     <?php foreach($comments as $comment): ?>
 
-		                	<?php if($comment['entry_id'] == $entry['entry_id']): ?>
+		                	<?php if(!empty($comments) && $comment['entry_id'] == $entry['entry_id']): ?>
 		                	<h2>Posted <?=Time::display($comment['created']);?> by <?=$comment['first_name'];?> <?=$comment['last_name'];?></h2>
 		                		<p><?=$comment['content'];?></p>
 		                	<?php endif; ?>
-
-                <script>
-					$('#comments_<?=$entry['entry_id'];?>').click(function() {
-						$('#commentswrap_<?=$entry['entry_id'];?>').toggle();
-					});
-                </script>
 
         				<?php endforeach; ?>
                 </aside>

@@ -11,16 +11,27 @@
 
         <?php foreach($trips as $trip): ?>
 
-        <div id="entry_list">
+        <div class="entry_list">
 
             <article >
+                <div class="cover">
+                    <?php if(($trip['coverimg']) == "fpo.jpg"): ?>
+                        <img class="cover" height="100" width="100" src="/../uploads/avatars/fpo.jpg" alt="Trip cover image not set"/>
+                    <?php else: ?>
+                       <img class="cover" height="100" width="100" src="/../uploads/avatars/<?=$trip['coverimg'];?>" alt="Trip cover image"/>
+                    <?php endif; ?>
+                    <?php if($trip['trip_user_id'] == $user->user_id): ?>
+                        <p>
+                            <a href="trips/coverimage/<?=$trip['trip_id']?>">Set cover image</a>
+                        </p>
+                    <?php endif; ?>     
+                </div>
 
                 <a href="http://p4.turkeyumber.com/trips/dashboard/<?=$trip['trip_id']?>"><h1><?=$trip['title']?></h1></a>
 
                 <h2>
                     <?=Time::display($trip['created'])?>
                 </h2>
-                
                 <p>
                     <?=$trip['description']?>
                 </p>
@@ -64,6 +75,7 @@
                 <?php endif; ?>
 
                 <!--END STAR/UNSTAR -->
+
 
 
               </article>

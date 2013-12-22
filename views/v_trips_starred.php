@@ -9,7 +9,7 @@
 
         <?php foreach($starred as $trip): ?>
 
-            <div id="entry_list">
+            <div class="entry_list">
 
         <article >
 
