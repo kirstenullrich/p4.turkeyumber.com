@@ -14,7 +14,7 @@
         <div class="entry_list">
 
             <article >
-                <div class="cover">
+                <a href="http://p4.turkeyumber.com/trips/dashboard/<?=$trip['trip_id']?>"><div class="cover">
                     <?php if(($trip['coverimg']) == "fpo.jpg"): ?>
                         <img class="cover" height="100" width="100" src="/../uploads/avatars/fpo.jpg" alt="Trip cover image not set"/>
                     <?php else: ?>
@@ -25,7 +25,7 @@
                             <a href="trips/coverimage/<?=$trip['trip_id']?>">Set cover image</a>
                         </p>
                     <?php endif; ?>     
-                </div>
+                </div></a>
 
                 <a href="http://p4.turkeyumber.com/trips/dashboard/<?=$trip['trip_id']?>"><h1><?=$trip['title']?></h1></a>
 

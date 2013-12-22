@@ -236,7 +236,6 @@ class trips_controller extends base_controller {
             $this->template->content->gallery = $gallery;
             $this->template->content->dashmap = $dashmap;
             $this->template->content->comments = $comments;
-            $this->template->content->entrycomment = $entrycomment;
             $this->template->content->start = $start;
             $this->template->content->last = $last;
 

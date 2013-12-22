@@ -9,6 +9,7 @@
 			<aside class="newentry">New Entry</aside>
 			<h1><?=$thistrip['title'];?></h1><br>
 				<?php if(!empty($start[0]['created'])): ?>
+					<h2> <?=Time::display($start[0]['created']);?>
 					<?php if(!empty($last[0]['created']) && ($last[0]['created'] !== $start[0]['created'])): ?>
 					to <?=Time::display($last[0]['created']);?>
 					<?php endif; ?>

@@ -226,7 +226,7 @@ nav ul li a:hover {
 }
 
 #dash #top {
-    min-height: 60px;
+    min-height: 70px;
 }
 
 #dash h1 {
@@ -243,10 +243,11 @@ nav ul li a:hover {
 
 #dash h2 {
     display: inline-block;
+    position: relative;
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
     font-size: .9em;
-    line-height: .5em;
+    line-height: .3em;
     text-align: center;
     color: #E5E5E5;
 }
@@ -292,6 +293,7 @@ nav ul li a:hover {
 
 #dash #map {
     position: relative;
+    display: block;
     height: 330px;
     width: 500px;
     margin: 0 auto 24px auto;
@@ -304,8 +306,9 @@ nav ul li a:hover {
 
 .state {
     position: absolute;
+    display: block;
     top: 0;
-    right: 0;
+    left: 0;
     height: 330px;
     width: 500px;
 }
