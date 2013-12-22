@@ -6,11 +6,9 @@ extends base_controller {
         parent::__construct();
     } 
 
-
     public function index() {
         Router::redirect("/users/login");
     }
-
 
     public function signup($error = NULL) {
 
@@ -54,13 +52,6 @@ extends base_controller {
 
         # Insert this user into the database 
             $user_id = DB::instance(DB_NAME)->insert("users", $_POST);
-
-           // $data = Array('user_id' => $user_id,
-           //     'user_id_followed' => $user_id,
-           //     'created' => Time::now()
-           //     );
-
-           // $followyourself = DB::instance(DB_NAME)->insert("users_users", $data);
 
        # Go back to Login page
             Router::redirect("/users/login/");

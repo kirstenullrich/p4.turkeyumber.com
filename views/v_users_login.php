@@ -12,10 +12,10 @@
 
         <form class="otherform" method='POST' action='/users/p_login'>
 
-            <label for="email">Email</label>
+            <label>Email</label>
             <input type='text' required name='email'>
 
-            <label for="password">Password</label>
+            <label>Password</label>
             <input type='password' required name='password'>
 
             <br><br>

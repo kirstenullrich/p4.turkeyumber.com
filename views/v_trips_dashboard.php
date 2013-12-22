@@ -2,147 +2,140 @@
 
 			<!-- TOP DASHBOARD WITH MAP -->
 
-            <div id="dash">
+	<div id="dash">
 
-                <div id="top">
-                	<aside class="miles">XMILES</aside>
-                    <aside class="newentry">New Entry</aside>
-                    <h1><?=$thistrip['title'];?></h1><br>
-                    <?php if(!empty($start[0]['created'])): ?>
-                    	<h2><?=Time::display($start[0]['created']);?> 
-                    		<?php if(!empty($last[0]['created']) && ($last[0]['created'] !== $start[0]['created'])): ?>
-                    		to <?=Time::display($last[0]['created']);?></h2>
-                    		<?php endif; ?>
-                    <?php endif; ?>
-                </div>
+		<div id="top">
+			<aside class="miles">XMILES</aside>
+			<aside class="newentry">New Entry</aside>
+			<h1><?=$thistrip['title'];?></h1><br>
+				<?php if(!empty($start[0]['created'])): ?>
+					<?php if(!empty($last[0]['created']) && ($last[0]['created'] !== $start[0]['created'])): ?>
+					to <?=Time::display($last[0]['created']);?>
+					<?php endif; ?>
+					</h2>
+				<?php endif; ?>
+		</div>
 
-                <div id="map">
-                	<?php foreach($dashmap as $mapstate): ?>
+		<div id="map">
+			<?php foreach($dashmap as $mapstate): ?>
+				<div class="<?=$mapstate['state'];?> state"></div>
+			<?php endforeach; ?>
+			<img src="/../images/map_bg.png" height="330" width="500" alt="US map"/>
+		</div>
 
-                    	<div class="<?=$mapstate['state'];?> state"></div>
-
-                    <?php endforeach; ?>
-
-                    <img src="/../images/map_bg.png" height="330" width="500" alt="US map"/>
-                </div>
-
-            </div> <!--end dash -->
+	</div> <!--end dash -->
 
 
 
 			<!-- ADD NEW ENTRY -->
 
-            <article id="add_entry" class="entry">
-                <aside class="expand"><img src="images/toggle_on.png"></aside>
-                <h1 class="big">New Entry</h1><br><br>
+	<article id="add_entry" class="entry">
+		<h1 class="big">New Entry</h1><br><br>
+		<form class="add_entry" action="/trips/p_newentry/<?=$trip_id;?>" method="POST">
+			<h1>Title</h1><br>
+			<input type='text' name="title" required placeholder="ex. Bathroom break"><br><br>
 
-                <form class="add_entry" action="/trips/p_newentry/<?=$trip_id;?>" method="POST">
-                    <h1>Title</h1><br>
-					<input type='text' name="title" required placeholder="ex. Bathroom break"><br><br>
-
-				        <?php if(isset($error) && $error == 'blank'): ?>
-				            <p class='error'>
-				                This field is required.<br>
-				            </p>
-				        <?php endif; ?>
+				<?php if(isset($error) && $error == 'blank'): ?>
+					<p class='error'>
+					This field is required.<br>
+					</p>
+				<?php endif; ?>
                      
-                    <h1>Entry text</h1><br>
-                    <textarea name="text"></textarea>
-
-			        <input type="submit" value="Submit">
-                </form>
-            </article>
+			<h1>Entry text</h1><br>
+			<textarea name="text"></textarea>
+			<input type="submit" value="Submit">
+		</form>
+	</article>
 
 
 
 	<!-- LIST OF EXISTING ENTRIES -->
 
-    <?php if (!empty($entries)): ?>
+	<?php if (!empty($entries)): ?>
 
-        <?php foreach($entries as $entry): ?>
+		<?php foreach($entries as $entry): ?>
 
-            <div class="entry_list">
+			<div class="entry_list">
 
-            	<article class="existing">
+				<article class="existing_<?=$entry['entry_id'];?> existing">
 
-	                <h1><?=$entry['title']?></h1> 
+					<h1><?=$entry['title']?></h1> 
 
-                        <?php if($entry['pic_id'] == '1'): ?>
-                            <a id="pic_<?=$entry['entry_id'];?>" href="../gallery/<?=$entry['entry_id'];?>/<?=$trip_id;?>" class="pic"><img src="/../images/pic.png"/></a>
-                        <?php endif; ?>
+						<?php if($entry['pic_id'] == '1'): ?>
+							<a id="pic_<?=$entry['entry_id'];?>" href="../gallery/<?=$entry['entry_id'];?>/<?=$trip_id;?>" class="pic"><img src="/../images/pic.png" alt="icon showing that there are pictures associated with this entry"/></a>
+						<?php endif; ?>
 
-    					<?php if (!empty($entry['text'])): ?>
-                            <img id="text_<?=$entry['entry_id'];?>" class="text" src="/../images/text.png"/>
-                        <?php endif; ?>
+						<?php if (!empty($entry['text'])): ?>
+							<img id="text_<?=$entry['entry_id'];?>" class="text" src="/../images/text.png" alt="icon showing that there is text associated with this entry"/>
+						<?php endif; ?>
 
-	                <h2>
-	                    <?=Time::display($entry['created']);?> | <?=$entry['city'];?>, <?=$entry['state']?>
-	                </h2>
+					<h2>
+						<?=Time::display($entry['created']);?> | <?=$entry['city'];?>, <?=$entry['state']?>
+					</h2>
 
-	                <div id="textwrap_<?=$entry['entry_id'];?>" class="display-none">
-	                	<p><?=$entry['text']?></p>
-	            	</div>
+					<div id="textwrap_<?=$entry['entry_id'];?>" class="display-none">
+						<p><?=$entry['text']?></p>
+					</div>
 
-		        </article>
+				</article>
 
 
 				<!-- SHOW/HIDE ENTRY TEXT -->
 
-		        <script>
+				<script>
 					$('#text_<?=$entry['entry_id'];?>').click(function() {
 						$('#textwrap_<?=$entry['entry_id'];?>').toggle();
 					});
-
-		        </script>
+				</script>
 
 
 
 				<!-- MODIFY ENTRY LINK-->
 
-	            <?php if($entry['user_id'] == $user->user_id): ?>
+				<?php if($entry['user_id'] == $user->user_id): ?>
 
-	            	<p class="modify" id="<?=$entry['entry_id']?>">Modify this entry or add media</p>
+					<p id="modify_<?=$entry['entry_id'];?>" class=" modify">Modify this entry or add media</p>
 
-	           	<?php endif; ?>
+				<?php endif; ?>
 
 
 				<!-- MODIFY FORM-->
 
-            	<div class="mod_entry_wrap" id="<?=$entry['entry_id']?>">
-            		<br>
+				<div class="mod_entry_wrap display-none mod_entry_wrap_<?=$entry['entry_id'];?>">
+					<br>
 
-	            	<?php if($entry['user_id'] == $user->user_id): ?>
+					<?php if($entry['user_id'] == $user->user_id): ?>
 
-	            	<div class="commentlist">
+					<div class="commentlist">
 						<form class="mod_entry" action="/trips/p_modify/<?php echo $entry['entry_id']; ?>/<?=$trip_id;?>" method="POST">
-							<h1>Title</h1><br><br>
-							<input type='text' name="title" required value='<?php if(isset($entry['title'])) echo $entry['title']?>'><br>
-							<textarea name="text"> <?php if(isset($entry['text'])) echo $entry['text']?> </textarea><br>
+							<h1>Entry</h1><br>
+							<h2>Title</h2><br>
+							<input type='text' name="title" required><br>
+							<h2>Text</h2><br>
+							<textarea name="text"> <?php if(isset($entry['text'])) echo $entry['text']?> </textarea>
 							<input type="submit" value="Submit">
 						</form>
 
 
-					    <form class="mod_entry" method='POST' enctype="multipart/form-data" action='/trips/addimage/<?php echo $entry['entry_id']; ?>/<?=$trip_id;?>'>
-							<h1>Picture</h1><br>
-							<input type='file' name='img'><br>
-							<h2>Caption</h2>
-							<input type='text' name="caption" ><br>
+						<form class="mod_entry" method='POST' enctype="multipart/form-data" action='/trips/addimage/<?php echo $entry['entry_id']; ?>/<?=$trip_id;?>'>
+							<h1>Picture</h1><br><br>
+							<input type='file' name='img'><br><br>
 							<input type='submit' value='Add'>
 						</form>
 					</div>
 							<?php if(isset($error) && $error == 'invalid'):?>
-					            <p class='error'>
-					                Invalid file type. Please upload a JPG, PNG, or GIF file.<br>
-					            </p>
-					        <?php endif; ?>
+								<p class='error'>
+									Invalid file type. Please upload a JPG, PNG, or GIF file.<br>
+								</p>
+							<?php endif; ?>
 
-					        <?php if(isset($error) && $error == 'process'):?>
-					            <p class="error">
-					            There has been a problem processing your image! Please try again.
-					            </p>
-					        <?php endif;?>
+							<?php if(isset($error) && $error == 'process'):?>
+								<p class="error">
+								There has been a problem processing your image! Please try again.
+								</p>
+							<?php endif;?>
 
-	                <?php endif; ?>
+					<?php endif; ?>
 
 				</div><!--end #modify-->
 
@@ -150,20 +143,20 @@
 
 	    	<!-- SHOW COMMENTS -->
 
-    	    	<aside id="commentswrap_<?=$entry['entry_id'];?>" class="commentlist">
-                	<h1>Comments</h1>
+				<aside id="commentswrap_<?=$entry['entry_id'];?>" class="commentlist">
+					<h1>Comments</h1>
 
-                	     <?php foreach($comments as $comment): ?>
+						<?php foreach($comments as $comment): ?>
 
-		                	<?php if(!empty($comments) && $comment['entry_id'] == $entry['entry_id']): ?>
-		                	<h2>Posted <?=Time::display($comment['created']);?> by <?=$comment['first_name'];?> <?=$comment['last_name'];?></h2>
-		                		<p><?=$comment['content'];?></p>
-		                	<?php endif; ?>
+							<?php if(!empty($comments) && $comment['entry_id'] == $entry['entry_id']): ?>
+							<h2>Posted <?=Time::display($comment['created']);?> by <?=$comment['first_name'];?> <?=$comment['last_name'];?></h2>
+								<p><?=$comment['content'];?></p>
+							<?php endif; ?>
 
-        				<?php endforeach; ?>
-                </aside>
+						<?php endforeach; ?>
+				</aside>
 
-	           	   <p class="addcomment" id="addcomment_<?=$entry['entry_id'];?>">Comment on this entry</p>
+				<p class="addcomment" id="addcomment_<?=$entry['entry_id'];?>">Comment on this entry</p>
 
 
 			<!-- ADD COMMENT LINK-->
@@ -173,32 +166,41 @@
 				$('#commentform_<?=$entry['entry_id'];?>').toggle();
 				return false;
 			});
+
 			</script>
 
 
 			<!-- ADD COMMENT -->
 				<div class="commentform" id="commentform_<?=$entry['entry_id'];?>">
-	                <h1>Add a Comment</h1><br><br>
+					<h1>Add a Comment</h1><br><br>
 
-	                <form class="add_entry" action="/trips/addcomment/<?=$entry['entry_id'];?>/<?=$trip_id;?>" method="POST">
+					<form class="add_entry" action="/trips/addcomment/<?=$entry['entry_id'];?>/<?=$trip_id;?>" method="POST">
 						<textarea name="content" required placeholder="Write a comment!"></textarea><br>
 
-				        <?php if(isset($missing)):?>
-				            <p class='red error'>
-				                Sorry, no blank entries.<br>
-				            </p>
-				        <?php endif; ?>
+						<?php if(isset($missing)):?>
+							<p class='red error'>
+								Sorry, no blank entries.<br>
+							</p>
+						<?php endif; ?>
 
-				        <input type="submit" value="Submit">
-	                </form>
-	            </div>
+						<input type="submit" value="Submit">
+					</form>
+				</div>
 
-	     	</div>
+			</div>
 
-        <?php endforeach; ?>
+			<script>
+				$('#modify_<?=$entry['entry_id'];?>').click(function() {
+					//console.log('modify clicked');
+					$(".mod_entry_wrap_<?=$entry['entry_id'];?>").toggle();
+					$(".existing_<?=$entry['entry_id'];?>").toggle();
+					return false;
+				});
+			</script>
 
-    <?php endif; ?>
-    </div><!--end #entry_list-->
+		<?php endforeach; ?>
 
-</div>
+	<?php endif; ?>
+	</div><!--end .entry_list-->
+
 

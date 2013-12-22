@@ -9,7 +9,7 @@
 
         <?php foreach($trips as $trip): ?>
 
-            <div id="entry_list">
+    <div id="entry_list">
 
         <article >
 
@@ -63,12 +63,6 @@
 
         <?php endforeach; ?>
 
-    <?php else: ?>
-
-        <p >No favorites.</p>
-
     <?php endif; ?>
 
-
-<br>
 </div>

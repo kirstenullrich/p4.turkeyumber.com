@@ -1,4 +1,6 @@
 <?php
+# This controller allows non-logged-in users to see the list of all trips and check out the entries
+
 class open_controller extends base_controller {
 
     public function __construct() {

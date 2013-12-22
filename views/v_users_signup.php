@@ -12,16 +12,16 @@
 
         <form class="otherform" method='POST' action='/users/p_signup'>
 
-            <label for="first_name">First Name</label>
+            <label>First Name</label>
             <input type='text' name='first_name' required placeholder="Enter your first name">
 
-            <label for="last_name">Last Name</label>
+            <label>Last Name</label>
             <input type='text' name='last_name' required placeholder="Enter your last name"> 
 
-            <label for="email">Email</label>
+            <label>Email</label>
             <input type='text' name='email' required placeholder="Enter your email address">
 
-            <label for="password">Password</label>
+            <label>Password</label>
             <input type='password' name='password' required placeholder="Enter a password">
             <br><br>
 

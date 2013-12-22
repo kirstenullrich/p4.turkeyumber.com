@@ -76,7 +76,8 @@ header {
     display: block;
     text-align: center;
     z-index: 200;
-    margin-top: 20px;
+    margin-top: 50px;
+    top: 20px;
 }
 
 .indexmsg {
@@ -105,9 +106,9 @@ header {
 .smalllogo {
     position: relative;
     display: block;
-    margin-left: 75px;
-    margin-bottom: 15px;
+    margin: 5px 0 15px 75px;
     float: left;
+    top: 10px;
     z-index: 200;
 }
 
@@ -130,14 +131,15 @@ aside.loggedin {
 /* PAGE NAV */
 nav {
     width: 100%;
-    margin: 0 auto 15px auto;
+    margin: 0 auto ;
     position: relative;
     font-size: .9em;
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
     text-decoration: none;
-    display: inline-block;
+    display: block;
     z-index: 100;
+    height: 45px;
 }
 
 nav ul {
@@ -164,7 +166,6 @@ nav ul li a:hover {
 
 .main ul {
     margin: 0;
-    height: 30px;
     text-align: right;
     background-color: #faf7f1;
 }
@@ -217,7 +218,7 @@ nav ul li a:hover {
     -webkit-border-radius: 0 0 6px 6px;
     -moz-border-radius: 0 0 6px 6px;
     width: 100%;
-    margin: 0 auto;
+    margin: 0 auto 10px auto;
     padding: 0;
     text-align: center;
     float: left;
@@ -443,11 +444,6 @@ div.tripinfo {
     display: inline-block;    
 }
 
-div.mod_entry_wrap {
-    width: 100%;
-    display: none;
-}
-
 aside.star, aside.starlink a {
     color: #658BB2;
     display: inline-block;
@@ -479,23 +475,24 @@ aside.star:before {
     float: left;
 }
 
-#entry_list .commentlist {
+aside.commentlist {
     clear: both;
     width: 100%;
     position: relative;
     border: none;
 }
 
-#entry_list .commentlist h1 {
+aside.commentlist h1 {
     margin-top: 25px;
     padding-top: 4px;
     margin-bottom: 10px;
     font-size: .875em;
     border-top: #658BB2 solid 1px;
     width: 100%;
+    display: block;
 }
 
-#entry_list .commentform h1 {
+.commentform h1 {
     display: block;
     position: relative;
     margin-top: 25px;
@@ -512,13 +509,20 @@ form.otherform {
 }
 
 form label, h1 {
-    clear: both;
+    position: relative;
     display: block;
     color: rgb(146,25,28);
     font-family: 'Open Sans', sans-serif;
     font-weight: 700;
     font-size: .8em;
-    margin-bottom: 2px;
+    margin-bottom: 12px;
+}
+
+form.mod_entry h2 {
+    position: relative;
+    display: block;
+    margin-bottom: 8px;
+    width: 100%;
 }
 
 form.otherform label{
@@ -527,12 +531,21 @@ form.otherform label{
     margin: 15px 0 8px 0;
 }
 
-form.add_entry textarea, form.mod_entry textarea {
+form.otherform textarea, form.add_entry textarea, form.mod_entry textarea {
     display: block;
-    width: 350px;
+    position: relative;
+    max-width: 600px;
+    min-width: 300px;
     min-height: 200px;
     margin: 0;
     resize:none;
+}
+
+form.add_entry input[type=text], form.mod_entry input[type=text], form.otherform input[type=text] {
+    max-width: 600px;
+    min-width: 300px;
+    display: block;
+    position: relative;
 }
 
 form.add_entry input[type=submit], form.mod_entry input[type=submit], form.otherform input[type=submit] {
@@ -546,6 +559,8 @@ form.add_entry input[type=submit], form.mod_entry input[type=submit], form.other
     border-radius: 4px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
+    display: block;
+    position: relative;
 }
 
 .center {
