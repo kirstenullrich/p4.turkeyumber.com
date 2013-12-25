@@ -133,6 +133,7 @@ class trips_controller extends base_controller {
 
             $q = "SELECT trips.trip_id AS trip_id,
                 trips.created, trips.title, trips.description,
+                trips.coverimg,
                 users_trips.trip_id AS starred_id,
                 users_trips.user_id,
                 users.last_name,

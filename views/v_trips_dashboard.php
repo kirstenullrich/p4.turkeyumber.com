@@ -33,7 +33,7 @@
 	<article id="add_entry" class="entry">
 		<h1 class="big">New Entry</h1><br><br>
 		<form class="add_entry" action="/trips/p_newentry/<?=$trip_id;?>" method="POST">
-			<h1>Title</h1><br>
+			<h1>Title</h1><br><br>
 			<input type='text' name="title" required placeholder="ex. Bathroom break"><br><br>
 
 				<?php if(isset($error) && $error == 'blank'): ?>
@@ -42,7 +42,7 @@
 					</p>
 				<?php endif; ?>
                      
-			<h1>Entry text</h1><br>
+			<h1>Entry text</h1><br><br>
 			<textarea name="text"></textarea>
 			<input type="submit" value="Submit">
 		</form>
@@ -74,7 +74,7 @@
 						<?=Time::display($entry['created']);?> | <?=$entry['city'];?>, <?=$entry['state']?>
 					</h2>
 
-					<div id="textwrap_<?=$entry['entry_id'];?>" class="display-none">
+					<div id="textwrap_<?=$entry['entry_id'];?>">
 						<p><?=$entry['text']?></p>
 					</div>
 
@@ -109,10 +109,10 @@
 
 					<div class="commentlist">
 						<form class="mod_entry" action="/trips/p_modify/<?php echo $entry['entry_id']; ?>/<?=$trip_id;?>" method="POST">
-							<h1>Entry</h1><br>
-							<h2>Title</h2><br>
+							<h1>Entry</h1><br><br>
+							<h2>Title</h2><br><br>
 							<input type='text' name="title" required><br>
-							<h2>Text</h2><br>
+							<h2>Text</h2><br><br>
 							<textarea name="text"> <?php if(isset($entry['text'])) echo $entry['text']?> </textarea>
 							<input type="submit" value="Submit">
 						</form>

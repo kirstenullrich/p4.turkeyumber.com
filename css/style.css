@@ -188,7 +188,7 @@ nav ul li a:hover {
     z-index: 1000;
     display: block;
     position: relative;
-    margin: 20px auto 0 auto;
+    margin: 30px auto 0 auto;
     padding: 0;
 }
 
@@ -355,7 +355,7 @@ a.picdelete, a.link {
     font-weight: 700;
     color: rgb(146,25,28);
     float: left;
-    margin: 0;
+    clear: both;
 }
 
 #add_entry h1.big {
@@ -370,6 +370,7 @@ a.picdelete, a.link {
 
 .entry_list h2  {
     font-size: .85em;
+    line-height: .7em;
     font-weight: 400;
     font-family: 'Open Sans', sans-serif;
     color: #658BB2;
@@ -391,6 +392,7 @@ a.picdelete, a.link {
 .entry_list p.posted  {
     font-size: .85em;
     font-weight: 400;
+    line-height: .9em;
     font-family: 'Open Sans', sans-serif;
     color: #658BB2;
     display: inline-block;
@@ -412,8 +414,13 @@ a.pic, img.text, img.comments {
     cursor: pointer;
 }
 
+img.text:hover, a.pic:hover {
+    opacity: .5;
+}
+
 .entry_list p.modify, .entry_list p.addcomment {
     font-size: .75em;
+    line-height: .9em;
     font-weight: 700;
     color: rgb(146,25,28);
     display: inline-block;
@@ -436,9 +443,8 @@ a.pic, img.text, img.comments {
 
 div.cover {
     float: left;
-    padding-right: 10px;
     position: relative;
-    display: inline-block;
+    clear: both;
 }
 
 div.tripinfo {
