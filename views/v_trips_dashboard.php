@@ -5,7 +5,7 @@
 	<div id="dash">
 
 		<div id="top">
-			<aside class="miles">XMILES</aside>
+			<aside class="miles invisible">XMILES</aside>
 			<aside class="newentry">New Entry</aside>
 			<h1><?=$thistrip['title'];?></h1><br>
 				<?php if(!empty($start[0]['created'])): ?>
@@ -60,7 +60,6 @@
 
 				<article class="existing_<?=$entry['entry_id'];?> existing">
 
-					<h1><?=$entry['title']?></h1> 
 
 						<?php if($entry['pic_id'] == '1'): ?>
 							<a id="pic_<?=$entry['entry_id'];?>" href="../gallery/<?=$entry['entry_id'];?>/<?=$trip_id;?>" class="pic"><img src="/../images/pic.png" alt="icon showing that there are pictures associated with this entry"/></a>
@@ -69,6 +68,8 @@
 						<?php if (!empty($entry['text'])): ?>
 							<img id="text_<?=$entry['entry_id'];?>" class="text" src="/../images/text.png" alt="icon showing that there is text associated with this entry"/>
 						<?php endif; ?>
+
+					<h1><?=$entry['title']?></h1> 
 
 					<h2>
 						<?=Time::display($entry['created']);?> | <?=$entry['city'];?>, <?=$entry['state']?>

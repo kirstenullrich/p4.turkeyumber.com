@@ -188,7 +188,7 @@ nav ul li a:hover {
     z-index: 1000;
     display: block;
     position: relative;
-    margin: 30px auto 0 auto;
+    margin: 20px auto 0 auto;
     padding: 0;
 }
 
@@ -242,7 +242,7 @@ nav ul li a:hover {
 }
 
 #dash h2 {
-    display: inline-block;
+    display: block;
     position: relative;
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
@@ -256,13 +256,17 @@ nav ul li a:hover {
     float: right;
     position: relative;
     margin: 30px 25px 15px 15px;
-    height: 31px;
+    height: 21px;
     width: 100px;
     font-weight: 400;
     font-size: .8em;
     text-align: left;
     color:#A4C1D6;
     cursor: pointer;
+}
+
+#dash aside.newentry:hover {
+    opacity: .5;
 }
 
 #dash aside.newentry:before {
@@ -406,8 +410,8 @@ a.pic, img.text, img.comments {
     font-size: .75em;
     font-weight: 700;
     color: #A4C1D6;
-    display: block;
-    float: right;
+    display: inline-block;
+    float: left;
     position: relative;
     margin: 0 5px;
     padding: 0 5px;
@@ -520,6 +524,7 @@ form.otherform {
 form label, h1 {
     position: relative;
     display: block;
+    clear: both;
     color: rgb(146,25,28);
     font-family: 'Open Sans', sans-serif;
     font-weight: 700;
@@ -543,18 +548,18 @@ form.otherform label{
 form.otherform textarea, form.add_entry textarea, form.mod_entry textarea {
     display: block;
     position: relative;
-    max-width: 600px;
-    min-width: 300px;
+    clear: both;
+    width: 99%;
     min-height: 200px;
     margin: 0;
     resize:none;
 }
 
 form.add_entry input[type=text], form.mod_entry input[type=text], form.otherform input[type=text] {
-    max-width: 600px;
-    min-width: 300px;
+    width: 99%;
     display: block;
     position: relative;
+    clear: both;
 }
 
 form.add_entry input[type=submit], form.mod_entry input[type=submit], form.otherform input[type=submit] {
